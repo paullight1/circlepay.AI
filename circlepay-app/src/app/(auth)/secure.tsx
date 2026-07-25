@@ -1,23 +1,84 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Platform, StyleSheet, Switch, Text, View } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { useStore } from '@/store/useStore';
 import { colors, fonts, radius, spacing } from '@/theme/tokens';
-import { Button, Screen, ScreenHeader } from '@/ui';
+import { AuthProgress, Button, Screen, ScreenHeader } from '@/ui';
+import { FadeSlideIn, PressableScale, Pulse, Shake, useReducedMotion } from '@/ui/motion';
 
 const PIN_LENGTH = 4;
 
 type Phase = 'create' | 'confirm' | 'biometrics';
 
-const KEYS: Array<Array<string | null>> = [
+const KEYS: (string | null)[][] = [
   ['1', '2', '3'],
   ['4', '5', '6'],
   ['7', '8', '9'],
   [null, '0', 'back'],
 ];
+
+/**
+ * One PIN dot. Pops as it fills so the keypad confirms the tap even when the
+ * user's thumb is covering the key. Reduced motion snaps to the end state.
+ */
+function PinDot({ filled }: { filled: boolean }) {
+  const reduced = useReducedMotion();
+  const scale = useSharedValue(1);
+  const wasFilled = useRef(filled);
+
+  useEffect(() => {
+    const justFilled = filled && !wasFilled.current;
+    wasFilled.current = filled;
+    if (!justFilled || reduced) return;
+    scale.value = withSequence(
+      withTiming(1.32, { duration: 110, easing: Easing.out(Easing.quad) }),
+      withSpring(1, { damping: 11, stiffness: 260 })
+    );
+  }, [filled, reduced, scale]);
+
+  const animated = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return <Animated.View style={[styles.dot, filled && styles.dotFilled, animated]} />;
+}
+
+/** Green tick that springs in once the PIN is confirmed. */
+function SuccessCheck() {
+  const reduced = useReducedMotion();
+  const scale = useSharedValue(0.5);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (reduced) {
+      scale.value = 1;
+      opacity.value = 1;
+      return;
+    }
+    opacity.value = withTiming(1, { duration: 180 });
+    scale.value = withSpring(1, { damping: 9, stiffness: 190, mass: 0.7 });
+  }, [reduced, scale, opacity]);
+
+  const animated = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Animated.View style={[styles.successCircle, animated]}>
+      <Ionicons name="checkmark" size={34} color={colors.onPrimary} />
+    </Animated.View>
+  );
+}
 
 export default function SecureAccount() {
   const router = useRouter();
@@ -28,6 +89,7 @@ export default function SecureAccount() {
   const [pin, setPinValue] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | undefined>();
+  const [shake, setShake] = useState(0);
   const [bioAvailable, setBioAvailable] = useState(Platform.OS === 'web');
   const [bioEnabled, setBioEnabled] = useState(false);
 
@@ -62,7 +124,10 @@ export default function SecureAccount() {
             setPhase('biometrics');
           } else {
             setConfirm('');
+            // Colour and motion never carry the message alone — the shake is on
+            // top of the error string, not instead of it.
             setError("PINs don't match — try again.");
+            setShake((n) => n + 1);
           }
         }, 250);
       }
@@ -90,18 +155,36 @@ export default function SecureAccount() {
     <Screen scroll={false} padded={false}>
       <ScreenHeader title="Secure Account" />
 
-      <Text style={styles.heading}>{heading}</Text>
-      <Text style={styles.sub}>{sub}</Text>
+      <AuthProgress current="Secure" />
+
+      {/* Re-mounted per phase so each step announces itself with the same rise. */}
+      <FadeSlideIn key={`h-${phase}`}>
+        <Text style={styles.heading}>{heading}</Text>
+      </FadeSlideIn>
+      <FadeSlideIn key={`s-${phase}`} delay={70}>
+        <Text style={styles.sub}>{sub}</Text>
+      </FadeSlideIn>
 
       {phase !== 'biometrics' ? (
         <>
           {/* PIN dots */}
-          <View style={styles.dots}>
-            {Array.from({ length: PIN_LENGTH }, (_, i) => (
-              <View key={i} style={[styles.dot, i < entry.length && styles.dotFilled]} />
-            ))}
-          </View>
-          {!!error && <Text style={styles.error}>{error}</Text>}
+          <Shake trigger={shake}>
+            <View
+              style={styles.dots}
+              accessibilityRole="text"
+              accessibilityLabel={`${entry.length} of ${PIN_LENGTH} digits entered`}>
+              {Array.from({ length: PIN_LENGTH }, (_, i) => (
+                <PinDot key={i} filled={i < entry.length} />
+              ))}
+            </View>
+          </Shake>
+
+          {error ? (
+            <View style={styles.errorRow} accessibilityRole="alert" accessibilityLiveRegion="polite">
+              <Ionicons name="alert-circle" size={15} color={colors.danger} />
+              <Text style={styles.error}>{error}</Text>
+            </View>
+          ) : null}
 
           {/* Keypad */}
           <View style={styles.pad}>
@@ -109,18 +192,22 @@ export default function SecureAccount() {
               <View key={r} style={styles.padRow}>
                 {row.map((key, c) =>
                   key === null ? (
-                    <View key={c} style={styles.key} />
+                    <View key={c} style={styles.keyCell} />
                   ) : (
-                    <Pressable
-                      key={c}
-                      onPress={() => onKey(key)}
-                      style={({ pressed }) => [styles.key, pressed && styles.keyPressed]}>
-                      {key === 'back' ? (
-                        <Ionicons name="backspace-outline" size={24} color={colors.sub} />
-                      ) : (
-                        <Text style={styles.keyText}>{key}</Text>
-                      )}
-                    </Pressable>
+                    <View key={c} style={styles.keyCell}>
+                      <PressableScale
+                        onPress={() => onKey(key)}
+                        haptic
+                        to={0.94}
+                        style={styles.key}
+                        accessibilityLabel={key === 'back' ? 'Delete last digit' : key}>
+                        {key === 'back' ? (
+                          <Ionicons name="backspace-outline" size={24} color={colors.sub} />
+                        ) : (
+                          <Text style={styles.keyText}>{key}</Text>
+                        )}
+                      </PressableScale>
+                    </View>
                   )
                 )}
               </View>
@@ -131,34 +218,38 @@ export default function SecureAccount() {
         <>
           {/* Success + biometrics */}
           <View style={styles.successWrap}>
-            <View style={styles.successHalo}>
-              <View style={styles.successCircle}>
-                <Ionicons name="checkmark" size={34} color={colors.onPrimary} />
+            <Pulse to={1.05} duration={1600}>
+              <View style={styles.successHalo}>
+                <SuccessCheck />
               </View>
-            </View>
-            <Text style={styles.successText}>Transaction PIN set</Text>
+            </Pulse>
+            <FadeSlideIn delay={140}>
+              <Text style={styles.successText}>Transaction PIN set</Text>
+            </FadeSlideIn>
           </View>
 
-          <View style={styles.bioCard}>
-            <View style={styles.bioIcon}>
-              <Ionicons name="scan-outline" size={22} color={colors.primary} />
+          <FadeSlideIn delay={210}>
+            <View style={styles.bioCard}>
+              <View style={styles.bioIcon}>
+                <Ionicons name="scan-outline" size={22} color={colors.primary} />
+              </View>
+              <View style={styles.bioTexts}>
+                <Text style={styles.bioTitle}>Enable Face ID for faster sign-in</Text>
+                <Text style={styles.bioBody}>
+                  {bioAvailable
+                    ? 'Use biometrics instead of your PIN to unlock CirclePay.'
+                    : 'Biometrics not available on this device.'}
+                </Text>
+              </View>
+              <Switch
+                value={bioEnabled}
+                onValueChange={setBioEnabled}
+                disabled={!bioAvailable}
+                trackColor={{ false: colors.borderStrong, true: colors.primary }}
+                thumbColor={colors.card}
+              />
             </View>
-            <View style={styles.bioTexts}>
-              <Text style={styles.bioTitle}>Enable Face ID for faster sign-in</Text>
-              <Text style={styles.bioBody}>
-                {bioAvailable
-                  ? 'Use biometrics instead of your PIN to unlock CirclePay.'
-                  : 'Biometrics not available on this device.'}
-              </Text>
-            </View>
-            <Switch
-              value={bioEnabled}
-              onValueChange={setBioEnabled}
-              disabled={!bioAvailable}
-              trackColor={{ false: colors.borderStrong, true: colors.primary }}
-              thumbColor={colors.card}
-            />
-          </View>
+          </FadeSlideIn>
 
           <View style={styles.bottom}>
             <Button title="Finish Setup" onPress={finish} />
@@ -199,6 +290,12 @@ const styles = StyleSheet.create({
     borderColor: colors.borderStrong,
   },
   dotFilled: { backgroundColor: colors.primary, borderColor: colors.primary },
+  errorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+  },
   error: {
     fontFamily: fonts.semibold,
     fontSize: 12.5,
@@ -207,14 +304,16 @@ const styles = StyleSheet.create({
   },
   pad: { marginTop: 'auto', gap: spacing.md },
   padRow: { flexDirection: 'row', gap: spacing.md },
+  keyCell: { flex: 1 },
   key: {
-    flex: 1,
     height: 62,
     borderRadius: radius.lg,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  keyPressed: { backgroundColor: colors.chip },
   keyText: { fontFamily: fonts.semibold, fontSize: 26, color: colors.ink },
   successWrap: { alignItems: 'center', marginBottom: spacing.xxl },
   successHalo: {

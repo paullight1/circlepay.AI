@@ -127,10 +127,15 @@ splash. No template art flashes before the brand.
 
 ```ts
 export const IMAGERY = {
-  introCircles: { uri: '…', blurhash: '…', alt: '…' },
+  introCircles: { uri: '…', tint: '#5A4632', alt: '…' },
   …
 } as const;
 ```
+
+`tint` is a flat backdrop colour roughly matching the photo's dominant tone, not a
+blurhash. Generating real blurhashes needs an image-decoding step, and no such
+tooling exists on this machine — a flat tint gets the same no-white-flash,
+no-layout-shift result with zero dependencies.
 
 Fixed URLs beat a random-image API: consistent branding per launch, deterministic
 caching, and hand-picked Nigerian/African subjects rather than whatever a random
@@ -146,9 +151,9 @@ unverified ID is a blank hero on slide one.
 `<RemoteImage>` wraps `expo-image`:
 
 - `cachePolicy="disk"` — fetched once, then served locally
-- `placeholder={{ blurhash }}` — instant colour blur, no layout shift
+- a `tint` backdrop behind the image — no white flash, no layout shift
 - `transition={300}` — fades in
-- `onError` → local gradient + `BrandMark` fallback, never a broken-image icon
+- `onError` → `BrandMark` on the tint, never a broken-image icon
 
 `Avatar` gains an optional `photoUri`. When absent or failed it renders today's
 initials, so the initials system becomes the fallback layer rather than being

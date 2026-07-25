@@ -74,9 +74,15 @@ export interface BillResult {
 
 interface AppState {
   // ── Auth / onboarding ──
-  onboarded: boolean;        // finished welcome→OTP→KYC→PIN flow
+  onboarded: boolean;        // finished phone→OTP→KYC→PIN flow
+  seenOnboarding: boolean;   // finished the intro carousel — survives sign-out
+  seenWelcome: boolean;      // the post-setup welcome modal has fired
+  coachMarksSeen: string[];  // tab keys whose coach mark has been dismissed
   user: User;
   setOnboarded: (v: boolean) => void;
+  setSeenOnboarding: (v: boolean) => void;
+  setSeenWelcome: (v: boolean) => void;
+  markCoachMarkSeen: (key: string) => void;
   setKycTier: (tier: 0 | 1 | 2) => void;
   setPin: (enabledBiometrics: boolean) => void;
   updateUser: (patch: Partial<User>) => void;
@@ -190,8 +196,19 @@ export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
       onboarded: false,
+      seenOnboarding: false,
+      seenWelcome: false,
+      coachMarksSeen: [],
       user: seedUser,
       setOnboarded: (v) => set({ onboarded: v }),
+      setSeenOnboarding: (v) => set({ seenOnboarding: v }),
+      setSeenWelcome: (v) => set({ seenWelcome: v }),
+      markCoachMarkSeen: (key) =>
+        set((s) =>
+          s.coachMarksSeen.includes(key)
+            ? s
+            : { coachMarksSeen: [...s.coachMarksSeen, key] }
+        ),
       setKycTier: (tier) => set((s) => ({ user: { ...s.user, kycTier: tier } })),
       setPin: (bio) => set((s) => ({ user: { ...s.user, pinSet: true, biometricsEnabled: bio } })),
       updateUser: (patch) => set((s) => ({ user: { ...s.user, ...patch } })),
@@ -582,6 +599,9 @@ export const useStore = create<AppState>()(
       resetApp: () =>
         set({
           onboarded: false,
+          seenOnboarding: false,
+          seenWelcome: false,
+          coachMarksSeen: [],
           user: seedUser,
           wallet: seedWallet,
           transactions: seedTransactions,
