@@ -9,15 +9,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { daysFromNow, uid } from '@/lib/format';
+import { electricityToken, examPins } from '@/lib/billers';
+import { daysFromNow, formatNaira, uid } from '@/lib/format';
 import {
-  seedAgents, seedCampaigns, seedCircles, seedLinkedAccounts,
+  seedAgents, seedBills, seedCampaigns, seedCircles, seedLinkedAccounts,
   seedNotifications, seedPlans, seedTransactions, seedTrustSignals,
   seedUser, seedWallet,
 } from './seed';
 import type {
-  AgentLocation, AppNotification, Campaign, Circle, CircleMember, Donation,
-  Frequency, LinkedAccount, PartPayPlan, PayCategory, PayModel, Transaction,
+  AgentLocation, AppNotification, BillAgentRequest, BillCategoryId, BillMethod,
+  BillPayment, Campaign, Circle, CircleMember, Donation, Frequency,
+  LinkedAccount, PartPayPlan, PayCategory, PayModel, Transaction,
   TrustSignal, User, Wallet, WithdrawalRequest,
 } from './types';
 
@@ -44,6 +46,30 @@ export interface CreateCampaignInput {
   target: number;
   deadlineDays: number;
   about: string;
+}
+
+/** Everything a bill purchase needs, whatever the category. */
+export interface PayBillInput {
+  categoryId: BillCategoryId;
+  categoryLabel: string;
+  billerId: string;
+  billerName: string;
+  customerRef: string;
+  customerName?: string;
+  planLabel?: string;
+  detail?: string;
+  amount: number;
+  fee: number;
+  /** Credential the biller issues on success. */
+  issues?: 'token' | 'pins';
+  pinPrefix?: string;
+  pinCount?: number;
+}
+
+export interface BillResult {
+  ok: boolean;
+  payment?: BillPayment;
+  error?: string;
 }
 
 interface AppState {
@@ -77,6 +103,16 @@ interface AppState {
   createCampaign: (input: CreateCampaignInput) => Campaign;
   donate: (campaignId: string, amount: number, method: Donation['method'], donor?: string) => boolean;
 
+  // ── Bills ──
+  bills: BillPayment[];
+  payBill: (input: PayBillInput) => BillResult;
+  billAgentRequest: BillAgentRequest | null;
+  requestAgentBillPayment: (input: PayBillInput) => BillResult;
+  completeAgentBillPayment: () => void;
+  cancelAgentBillPayment: () => void;
+  /** Pushes the token/PIN notification once a bill has settled. */
+  notifyBillCredential: (payment: BillPayment) => void;
+
   // ── Agent / kiosk ──
   agents: AgentLocation[];
   linkedAccounts: LinkedAccount[];
@@ -100,6 +136,46 @@ interface AppState {
 
 function tx(partial: Omit<Transaction, 'id' | 'date'>): Transaction {
   return { ...partial, id: uid('t'), date: new Date().toISOString() };
+}
+
+/** Bill receipt reference, e.g. "CPB-4821906". */
+function billReference(): string {
+  return `CPB-${Math.floor(1000000 + ((Date.now() * 7919) % 9000000))}`;
+}
+
+/**
+ * Builds the BillPayment record, minting the token or PINs the biller issues.
+ * Both are derived from the reference so a receipt re-opened from history shows
+ * the credential it was issued with.
+ */
+function buildBillPayment(
+  input: PayBillInput,
+  method: BillMethod,
+  status: BillPayment['status']
+): BillPayment {
+  const reference = billReference();
+  return {
+    id: uid('b'),
+    reference,
+    categoryId: input.categoryId,
+    categoryLabel: input.categoryLabel,
+    billerId: input.billerId,
+    billerName: input.billerName,
+    customerRef: input.customerRef,
+    customerName: input.customerName,
+    planLabel: input.planLabel,
+    detail: input.detail,
+    amount: input.amount,
+    fee: input.fee,
+    method,
+    status,
+    date: new Date().toISOString(),
+    token: input.issues === 'token' ? electricityToken(reference) : undefined,
+    pins:
+      input.issues === 'pins'
+        ? examPins(reference, input.pinPrefix ?? input.billerName, Math.max(1, input.pinCount ?? 1))
+        : undefined,
+  };
 }
 
 /** Scratch card serials: 14-16 digits. Denomination derived from the serial so demo is deterministic. */
@@ -324,6 +400,120 @@ export const useStore = create<AppState>()(
         return true;
       },
 
+      bills: seedBills,
+
+      payBill: (input) => {
+        const s = get();
+        const total = input.amount + input.fee;
+        if (input.amount <= 0) return { ok: false, error: 'Enter a valid amount.' };
+        if (total > s.wallet.available) {
+          return {
+            ok: false,
+            error:
+              `Insufficient balance. ${formatNaira(total)} needed, ` +
+              `${formatNaira(s.wallet.available, 2)} available.`,
+          };
+        }
+        const payment = buildBillPayment(input, 'wallet', 'success');
+        set({
+          wallet: { ...s.wallet, available: s.wallet.available - total },
+          bills: [payment, ...s.bills],
+          transactions: [
+            tx({
+              title: payment.billerName,
+              subtitle: `${payment.categoryLabel} · ${payment.customerRef}`,
+              amount: total, direction: 'out', status: 'success', category: 'bill',
+            }),
+            ...s.transactions,
+          ],
+        });
+        get().notifyBillCredential(payment);
+        return { ok: true, payment };
+      },
+
+      billAgentRequest: null,
+
+      requestAgentBillPayment: (input) => {
+        const s = get();
+        const total = input.amount + input.fee;
+        if (input.amount <= 0) return { ok: false, error: 'Enter a valid amount.' };
+        if (total > s.wallet.available) {
+          return {
+            ok: false,
+            error:
+              `Insufficient balance. The agent charges your wallet ${formatNaira(total)}, ` +
+              `${formatNaira(s.wallet.available, 2)} available.`,
+          };
+        }
+        const payment = buildBillPayment(input, 'agent', 'pending');
+        set({
+          bills: [payment, ...s.bills],
+          billAgentRequest: {
+            code: String(Math.floor(100000 + ((Date.now() * 7919) % 900000))),
+            paymentId: payment.id,
+            expiresAt: new Date(Date.now() + 5 * 60000).toISOString(),
+            status: 'pending',
+          },
+        });
+        return { ok: true, payment };
+      },
+
+      completeAgentBillPayment: () => {
+        const s = get();
+        const req = s.billAgentRequest;
+        const payment = s.bills.find((b) => b.id === req?.paymentId);
+        if (!req || req.status !== 'pending' || !payment) return;
+        const total = payment.amount + payment.fee;
+        if (total > s.wallet.available) {
+          // Balance moved since the code was issued — record the failure honestly.
+          set({
+            billAgentRequest: null,
+            bills: s.bills.map((b) => (b.id === payment.id ? { ...b, status: 'failed' as const } : b)),
+          });
+          return;
+        }
+        set({
+          billAgentRequest: { ...req, status: 'completed' },
+          wallet: { ...s.wallet, available: s.wallet.available - total },
+          bills: s.bills.map((b) => (b.id === payment.id ? { ...b, status: 'success' as const } : b)),
+          transactions: [
+            tx({
+              title: payment.billerName,
+              subtitle: `${payment.categoryLabel} · Paid at agent`,
+              amount: total, direction: 'out', status: 'success', category: 'bill',
+            }),
+            ...s.transactions,
+          ],
+        });
+        get().notifyBillCredential(payment);
+      },
+
+      cancelAgentBillPayment: () => {
+        const s = get();
+        const id = s.billAgentRequest?.paymentId;
+        set({
+          billAgentRequest: null,
+          bills: id ? s.bills.filter((b) => !(b.id === id && b.status === 'pending')) : s.bills,
+        });
+      },
+
+      notifyBillCredential: (payment) => {
+        if (payment.token) {
+          get().pushNotification({
+            type: 'payment',
+            title: 'Meter Token Ready',
+            body: `Your ${payment.billerName} token is ${payment.token}. It is saved on your receipt.`,
+          });
+        }
+        if (payment.pins?.length) {
+          get().pushNotification({
+            type: 'payment',
+            title: 'PINs Delivered',
+            body: `${payment.pins.length} ${payment.billerName} PIN${payment.pins.length > 1 ? 's are' : ' is'} on your receipt.`,
+          });
+        }
+      },
+
       agents: seedAgents,
       linkedAccounts: seedLinkedAccounts,
       linkAccount: (bank) =>
@@ -398,6 +588,8 @@ export const useStore = create<AppState>()(
           circles: seedCircles,
           plans: seedPlans,
           campaigns: seedCampaigns,
+          bills: seedBills,
+          billAgentRequest: null,
           agents: seedAgents,
           linkedAccounts: seedLinkedAccounts,
           redeemedSerials: [],

@@ -196,11 +196,11 @@ export default function Home() {
       {/* Quick access */}
       <View style={styles.quickRow}>
         <QuickTile
-          icon="wallet"
+          icon="receipt"
           tint={colors.success}
           bg={colors.successBg}
-          label="Savings"
-          onPress={() => router.push('/(tabs)/circles')}
+          label="Bills"
+          onPress={() => router.push('/bills')}
         />
         <QuickTile
           icon="people"

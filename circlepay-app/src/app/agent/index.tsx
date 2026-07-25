@@ -41,6 +41,14 @@ const SERVICES: Service[] = [
     label: 'Transfer to User', caption: 'Send money to anyone', route: '/wallet/transfer',
   },
   {
+    id: 'airtime', icon: 'phone-portrait', color: colors.warning, bg: colors.warningBg,
+    label: 'Airtime & Data', caption: 'Top up any network', route: '/bills/airtime',
+  },
+  {
+    id: 'bills', icon: 'receipt', color: colors.primary, bg: colors.chip,
+    label: 'Pay Bills', caption: 'Power, TV, betting & more', route: '/bills',
+  },
+  {
     id: 'history', icon: 'time', color: colors.warning, bg: colors.warningBg,
     label: 'View Transactions', caption: 'Your agent activity', route: '/wallet/transactions',
   },

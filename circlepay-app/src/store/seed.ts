@@ -2,9 +2,10 @@
  * Seed data mirroring the CirclePay AI design mockups.
  * Dates are generated relative to "now" so countdowns and schedules stay live.
  */
+import { electricityToken } from '@/lib/billers';
 import { daysFromNow, minutesAgo } from '@/lib/format';
 import type {
-  AgentLocation, AppNotification, Campaign, Circle, LinkedAccount,
+  AgentLocation, AppNotification, BillPayment, Campaign, Circle, LinkedAccount,
   PartPayPlan, Transaction, TrustSignal, User, Wallet,
 } from './types';
 
@@ -269,14 +270,52 @@ export const seedLinkedAccounts: LinkedAccount[] = [
   { id: 'la-2', bank: 'Opay', last4: '5678', active: true, purpose: 'Rent Payment Plan · Monthly' },
 ];
 
+export const seedBills: BillPayment[] = [
+  {
+    id: 'b-airtime', reference: 'CPB-4821906',
+    categoryId: 'airtime', categoryLabel: 'Airtime',
+    billerId: 'mtn', billerName: 'MTN',
+    customerRef: '0803 555 0147',
+    amount: 2000, fee: 0, method: 'wallet', status: 'success', date: minutesAgo(60 * 6),
+  },
+  {
+    id: 'b-dstv', reference: 'CPB-4791233',
+    categoryId: 'cable-tv', categoryLabel: 'Cable TV',
+    billerId: 'dstv', billerName: 'DStv',
+    customerRef: '7032518844', customerName: 'GODFREY OKORO',
+    planLabel: 'Compact · 1 Month',
+    amount: 19000, fee: 100, method: 'wallet', status: 'success', date: minutesAgo(60 * 30),
+  },
+  {
+    id: 'b-power', reference: 'CPB-4762018',
+    categoryId: 'electricity', categoryLabel: 'Electricity',
+    billerId: 'ikeja', billerName: 'Ikeja Electric',
+    customerRef: '04123456789', customerName: 'GODFREY OKORO',
+    planLabel: 'Prepaid meter',
+    amount: 10000, fee: 100, method: 'agent', status: 'success', date: minutesAgo(60 * 74),
+    token: electricityToken('CPB-4762018'),
+  },
+  {
+    id: 'b-data', reference: 'CPB-4744570',
+    categoryId: 'data', categoryLabel: 'Data',
+    billerId: 'mtn', billerName: 'MTN',
+    customerRef: '0803 555 0147', planLabel: '10GB · 30 days',
+    amount: 8000, fee: 0, method: 'wallet', status: 'success', date: minutesAgo(60 * 120),
+  },
+];
+
 export const seedTransactions: Transaction[] = [
   { id: 't-1', title: 'Auto Deduction', subtitle: 'Family Esusu', amount: 10000, direction: 'out', date: minutesAgo(60 * 4), status: 'success', category: 'circle' },
+  { id: 't-8', title: 'MTN', subtitle: 'Airtime · 0803 555 0147', amount: 2000, direction: 'out', date: minutesAgo(60 * 6), status: 'success', category: 'bill' },
   { id: 't-2', title: 'Payment - School Fees', subtitle: 'PartPay installment', amount: 25000, direction: 'out', date: minutesAgo(60 * 22), status: 'success', category: 'partpay' },
   { id: 't-3', title: 'Auto Deduction', subtitle: 'Friends Ajo Group', amount: 1000, direction: 'out', date: minutesAgo(60 * 26), status: 'success', category: 'circle' },
+  { id: 't-9', title: 'DStv', subtitle: 'Cable TV · 7032518844', amount: 19100, direction: 'out', date: minutesAgo(60 * 30), status: 'success', category: 'bill' },
   { id: 't-4', title: 'Backup Pool Contribution', subtitle: 'Family Esusu · 10%', amount: 1000, direction: 'out', date: minutesAgo(60 * 48), status: 'success', category: 'circle' },
   { id: 't-5', title: 'Manual Contribution', subtitle: 'Business Savings Circle', amount: 10000, direction: 'out', date: minutesAgo(60 * 72), status: 'success', category: 'circle' },
+  { id: 't-10', title: 'Ikeja Electric', subtitle: 'Electricity · 04123456789', amount: 10100, direction: 'out', date: minutesAgo(60 * 74), status: 'success', category: 'bill' },
   { id: 't-6', title: 'Wallet Top-up', subtitle: 'GTBank •••• 1234', amount: 50000, direction: 'in', date: minutesAgo(60 * 96), status: 'success', category: 'wallet' },
   { id: 't-7', title: 'Late Fee (Blessing A.)', subtitle: 'Family Esusu penalty share', amount: 500, direction: 'in', date: minutesAgo(60 * 120), status: 'deducted', category: 'fee' },
+  { id: 't-11', title: 'MTN', subtitle: 'Data · 0803 555 0147', amount: 8000, direction: 'out', date: minutesAgo(60 * 120), status: 'success', category: 'bill' },
 ];
 
 export const seedNotifications: AppNotification[] = [

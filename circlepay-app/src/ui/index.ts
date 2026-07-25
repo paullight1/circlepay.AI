@@ -1,5 +1,6 @@
 export { AmountText } from './AmountText';
 export { Avatar } from './Avatar';
+export { BrandTile } from './BrandTile';
 export { Button } from './Button';
 export { Card } from './Card';
 export { Chip } from './Chip';

@@ -33,6 +33,9 @@ export default function More() {
       <Card padded={false} style={styles.group}>
         <ListRow title="Wallet" subtitle="Balances, add money, withdraw & transfer" chevron
           left={<IconBubble name="wallet-outline" />} onPress={() => router.push('/wallet')} />
+        <ListRow title="Bills & Airtime" subtitle="Data, power, TV, betting, hotels & travel" chevron
+          left={<IconBubble name="receipt-outline" color={colors.info} bg={colors.infoBg} />}
+          onPress={() => router.push('/bills')} />
         <ListRow title="PartPay Installments" subtitle="Pay for services gradually" chevron
           left={<IconBubble name="calendar-outline" color={colors.warning} bg={colors.warningBg} />}
           onPress={() => router.push('/partpay')} />

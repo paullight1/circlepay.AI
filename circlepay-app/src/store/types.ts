@@ -10,6 +10,10 @@ export type CampaignCategory =
 export type PayCategory =
   | 'Rent' | 'School Fees' | 'Medical Bills' | 'Consumer Products' | 'Business Services' | 'Other';
 export type NotifType = 'alert' | 'payment' | 'payout' | 'backup' | 'campaign' | 'system';
+export type BillCategoryId =
+  | 'airtime' | 'data' | 'electricity' | 'cable-tv' | 'betting'
+  | 'internet' | 'education' | 'hotels' | 'transport';
+export type BillMethod = 'wallet' | 'agent';
 
 export interface User {
   id: string;
@@ -38,7 +42,7 @@ export interface Transaction {
   direction: 'in' | 'out';
   date: string;            // ISO
   status: TxStatus;
-  category: 'circle' | 'wallet' | 'partpay' | 'campaign' | 'agent' | 'fee';
+  category: 'circle' | 'wallet' | 'partpay' | 'campaign' | 'agent' | 'fee' | 'bill';
 }
 
 export interface CircleMember {
@@ -148,6 +152,39 @@ export interface WithdrawalRequest {
   fee: number;
   expiresAt: string;         // ISO, ~5 minutes
   status: 'pending' | 'completed' | 'expired';
+}
+
+/**
+ * A single bill purchase — airtime, data, a DStv package, an electricity token,
+ * a hotel booking, a bus seat. One shape for all nine categories so the hub,
+ * history and receipt screens stay generic.
+ */
+export interface BillPayment {
+  id: string;
+  reference: string;         // "CPB-4821906"
+  categoryId: BillCategoryId;
+  categoryLabel: string;     // "Cable TV"
+  billerId: string;
+  billerName: string;        // "DStv"
+  customerRef: string;       // meter / smartcard / phone / booking ref
+  customerName?: string;     // resolved by the simulated lookup
+  planLabel?: string;        // "Compact Plus · 1 Month"
+  detail?: string;           // "2 nights · Deluxe Room · 2 guests"
+  amount: number;
+  fee: number;
+  method: BillMethod;
+  status: 'success' | 'pending' | 'failed';
+  date: string;              // ISO
+  token?: string;            // electricity token, prepaid meters only
+  pins?: string[];           // exam pins
+}
+
+/** One-time code shown to an agent so their terminal can settle a bill. */
+export interface BillAgentRequest {
+  code: string;              // "540 118" shown spaced
+  paymentId: string;
+  expiresAt: string;         // ISO, ~5 minutes
+  status: 'pending' | 'completed';
 }
 
 export interface Wallet {
