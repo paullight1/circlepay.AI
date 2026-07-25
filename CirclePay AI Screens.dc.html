@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  image-slot { display: block; }
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+
+<div style="min-height:100vh;background:#E7E8F0;background-image:radial-gradient(circle at 1px 1px, rgba(75,39,212,0.06) 1px, transparent 0);background-size:26px 26px;padding:56px 56px 96px;color:#1A1B2E">
+
+  <div style="max-width:1680px;margin:0 auto 52px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div style="display:flex;align-items:center;gap:13px">
+        <div style="width:44px;height:44px;border-radius:50%;background:conic-gradient(from 140deg,#4B27D4,#7C4DFF,#B69BFF,#4B27D4);display:flex;align-items:center;justify-content:center">
+          <div style="width:16px;height:16px;border-radius:50%;background:#E7E8F0"></div>
+        </div>
+        <span style="font-size:28px;font-weight:800;letter-spacing:-0.5px">CirclePay<span style="color:#7C4DFF">AI</span></span>
+      </div>
+      <div style="margin-top:12px;color:#5E5F70;font-size:15px;font-weight:500">Save Together. Pay Smart. Grow Better. — Mobile app screen designs · v1.0</div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;font-size:12.5px;font-weight:600;color:#5E5F70">
+      <div style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:50%;background:#1BA87A"></span>Paid / Success</div>
+      <div style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:50%;background:#E0930F"></span>Pending</div>
+      <div style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:50%;background:#E23D6B"></span>Late / Alert</div>
+    </div>
+  </div>
+
+  <div style="max-width:1680px;margin:0 auto;display:flex;flex-direction:column;gap:60px">
+
+    <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">01 · Onboarding & Auth</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#4B27D4;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.18);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sbLight }}
+            <div style="padding:14px 26px 0;color:#fff">
+              <div style="display:flex;align-items:center;gap:11px">
+                <div style="width:34px;height:34px;border-radius:50%;background:conic-gradient(from 140deg,#B69BFF,#fff,#B69BFF);display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:50%;background:#4B27D4"></div></div>
+                <span style="font-size:19px;font-weight:800">CirclePay<span style="color:#C6B2FF">AI</span></span>
+              </div>
+            </div>
+            <div style="padding:22px 26px 0">
+              <image-slot id="onb-hero" style="width:288px;height:250px" shape="rounded" radius="24" placeholder="Community savings illustration"></image-slot>
+            </div>
+            <div style="padding:26px 28px 0;color:#fff">
+              <div style="font-size:27px;font-weight:800;line-height:1.18;letter-spacing:-0.5px">Save together.<br>Pay smart.<br>Grow better.</div>
+              <div style="margin-top:14px;font-size:14.5px;line-height:1.55;color:#CDBFFF">Join trusted savings circles, split big bills, and support your community — all in one place.</div>
+            </div>
+            <div style="margin-top:auto;padding:26px 28px 34px">
+              <div style="display:flex;gap:7px;justify-content:center;margin-bottom:22px">
+                <span style="width:22px;height:6px;border-radius:3px;background:#fff"></span>
+                <span style="width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,0.4)"></span>
+                <span style="width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,0.4)"></span>
+              </div>
+              <div style="background:#fff;color:#4B27D4;border-radius:16px;padding:17px;text-align:center;font-size:16px;font-weight:700">Get Started</div>
+              <div style="text-align:center;margin-top:16px;font-size:14px;color:#CDBFFF;font-weight:500">Already have an account? <span style="color:#fff;font-weight:700">Log in</span></div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">01 · Welcome</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 20px">
+              <span style="color:#1A1B2E">{{ ic.back }}</span>
+            </div>
+            <div style="padding:0 26px">
+              <div style="font-size:24px;font-weight:800;letter-spacing:-0.4px">Verify your number</div>
+              <div style="margin-top:10px;font-size:14.5px;line-height:1.55;color:#6B6C7E">We sent a 6-digit code to<br><span style="color:#1A1B2E;font-weight:700">+234 803 •••• 4512</span></div>
+              <div style="display:flex;gap:11px;margin-top:30px">
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #4B27D4;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">8</div>
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #4B27D4;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">7</div>
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #4B27D4;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">2</div>
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #EBEBF1;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#C9CAD6">6</div>
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #EBEBF1;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#C9CAD6"></div>
+                <div style="flex:1;height:60px;border-radius:15px;background:#fff;border:1.5px solid #EBEBF1;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#C9CAD6"></div>
+              </div>
+              <div style="margin-top:24px;font-size:14px;color:#6B6C7E;text-align:center">Didn't get it? <span style="color:#C9CAD6;font-weight:700">Resend in 0:24</span></div>
+            </div>
+            <div style="margin:26px 26px 0;background:#fff;border-radius:18px;padding:18px 20px;display:flex;gap:13px;align-items:flex-start">
+              <span style="color:#4B27D4;flex:none">{{ ic.shield }}</span>
+              <div style="font-size:12.5px;line-height:1.5;color:#6B6C7E">Your number keeps your circles and wallet secure. We never share it.</div>
+            </div>
+            <div style="margin-top:auto;padding:24px 26px 34px">
+              <div style="background:#4B27D4;color:#fff;border-radius:16px;padding:17px;text-align:center;font-size:16px;font-weight:700">Verify &amp; Continue</div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">02 · Verify OTP</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 18px">
+              <span style="color:#1A1B2E">{{ ic.back }}</span>
+              <span style="font-size:17px;font-weight:700">Verify your identity</span>
+            </div>
+            <div style="padding:0 26px">
+              <div style="font-size:13px;font-weight:600;color:#6B6C7E;line-height:1.5">Complete KYC to unlock higher limits, payouts and installments.</div>
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <div style="flex:1;height:5px;border-radius:3px;background:#1BA87A"></div>
+                <div style="flex:1;height:5px;border-radius:3px;background:#1BA87A"></div>
+                <div style="flex:1;height:5px;border-radius:3px;background:#E0E1E9"></div>
+              </div>
+              <div style="margin-top:8px;font-size:12px;font-weight:600;color:#1BA87A">Tier 2 of 3 · almost there</div>
+            </div>
+            <div style="padding:22px 26px 0;display:flex;flex-direction:column;gap:13px">
+              <div style="background:#fff;border-radius:18px;padding:17px 18px;display:flex;align-items:center;gap:14px">
+                <div style="width:44px;height:44px;border-radius:12px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center">{{ ic.check }}</div>
+                <div style="flex:1"><div style="font-size:14.5px;font-weight:700">BVN verified</div><div style="font-size:12.5px;color:#6B6C7E">2234 •••• 8891</div></div>
+                <span style="font-size:12px;font-weight:700;color:#1BA87A">Done</span>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:17px 18px;display:flex;align-items:center;gap:14px">
+                <div style="width:44px;height:44px;border-radius:12px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center">{{ ic.check }}</div>
+                <div style="flex:1"><div style="font-size:14.5px;font-weight:700">NIN verified</div><div style="font-size:12.5px;color:#6B6C7E">National ID linked</div></div>
+                <span style="font-size:12px;font-weight:700;color:#1BA87A">Done</span>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:17px 18px;display:flex;align-items:center;gap:14px;border:1.5px dashed #C4B6F5">
+                <div style="width:44px;height:44px;border-radius:12px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.camera }}</div>
+                <div style="flex:1"><div style="font-size:14.5px;font-weight:700">Upload a valid ID</div><div style="font-size:12.5px;color:#6B6C7E">Driver's licence, NIN slip or passport</div></div>
+                <span style="color:#4B27D4">{{ ic.chevronRight }}</span>
+              </div>
+            </div>
+            <div style="padding:20px 26px 0">
+              <image-slot id="kyc-id" style="width:288px;height:120px" shape="rounded" radius="16" placeholder="ID document preview"></image-slot>
+            </div>
+            <div style="margin-top:auto;padding:24px 26px 34px">
+              <div style="background:#4B27D4;color:#fff;border-radius:16px;padding:17px;text-align:center;font-size:16px;font-weight:700">Submit for review</div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">03 · Verify Identity (KYC)</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 20px">
+              <span style="color:#1A1B2E">{{ ic.back }}</span>
+            </div>
+            <div style="padding:0 26px">
+              <div style="font-size:24px;font-weight:800;letter-spacing:-0.4px">Secure your account</div>
+              <div style="margin-top:10px;font-size:14px;color:#6B6C7E;line-height:1.5">Set a 4-digit PIN to authorise every payment and payout.</div>
+              <div style="display:flex;gap:16px;justify-content:center;margin:34px 0 6px">
+                <span style="width:17px;height:17px;border-radius:50%;background:#4B27D4"></span>
+                <span style="width:17px;height:17px;border-radius:50%;background:#4B27D4"></span>
+                <span style="width:17px;height:17px;border-radius:50%;background:#4B27D4"></span>
+                <span style="width:17px;height:17px;border-radius:50%;background:#fff;border:1.5px solid #C9CAD6"></span>
+              </div>
+            </div>
+            <div style="padding:26px 34px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px 22px">
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">1</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">2</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">3</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">4</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">5</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">6</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">7</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">8</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">9</div>
+              <div style="text-align:center;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.faceId }}</div>
+              <div style="text-align:center;font-size:26px;font-weight:600;padding:8px 0">0</div>
+              <div style="text-align:center;color:#6B6C7E;display:flex;align-items:center;justify-content:center">{{ ic.back }}</div>
+            </div>
+            <div style="margin:22px 26px 0;background:#EDE7FD;border-radius:18px;padding:16px 18px;display:flex;gap:13px;align-items:center">
+              <span style="color:#4B27D4;flex:none">{{ ic.faceId }}</span>
+              <div style="flex:1;font-size:13.5px;font-weight:700;color:#3A2596">Enable Face ID for faster sign-in</div>
+              <div style="width:40px;height:24px;border-radius:12px;background:#4B27D4;position:relative;flex:none"><span style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff"></span></div>
+            </div>
+            <div style="margin-top:auto;padding:24px 26px 34px">
+              <div style="background:#4B27D4;color:#fff;border-radius:16px;padding:17px;text-align:center;font-size:16px;font-weight:700">Confirm PIN</div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">04 · Secure Account (PIN &amp; Face ID)</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">02 · Home &amp; Wallet</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 24px 16px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:42px;height:42px;border-radius:50%;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px">GO</div>
+                <div><div style="font-size:12.5px;color:#6B6C7E;font-weight:500">Good morning,</div><div style="font-size:16px;font-weight:800">Godfrey 👋</div></div>
+              </div>
+              <div style="width:42px;height:42px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;color:#1A1B2E;position:relative"><span>{{ ic.bell }}</span><span style="position:absolute;top:11px;right:12px;width:8px;height:8px;border-radius:50%;background:#E23D6B;border:1.5px solid #fff"></span></div>
+            </div>
+            <div style="margin:0 20px;background:linear-gradient(150deg,#5B2EE6,#7C4DFF);border-radius:24px;padding:22px 22px 20px;color:#fff;box-shadow:0 14px 30px rgba(91,46,230,0.32)">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;color:#D9CCFF;font-weight:500">Total Balance</span><span style="color:#D9CCFF">{{ ic.eye }}</span></div>
+              <div style="font-size:32px;font-weight:800;letter-spacing:-0.5px;margin-top:6px">₦125,680.50</div>
+              <div style="display:flex;gap:24px;margin-top:14px">
+                <div><div style="font-size:11px;color:#D9CCFF">Available</div><div style="font-size:14px;font-weight:700">₦98,450.20</div></div>
+                <div><div style="font-size:11px;color:#D9CCFF">On Hold (Groups)</div><div style="font-size:14px;font-weight:700">₦27,230.30</div></div>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <div style="flex:1;background:rgba(255,255,255,0.16);border-radius:13px;padding:11px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;font-weight:600">{{ ic.plus }}Add Money</div>
+                <div style="flex:1;background:rgba(255,255,255,0.16);border-radius:13px;padding:11px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;font-weight:600">{{ ic.arrowUp }}Withdraw</div>
+                <div style="flex:1;background:rgba(255,255,255,0.16);border-radius:13px;padding:11px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;font-weight:600">{{ ic.transfer }}Transfer</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 24px 12px"><span style="font-size:16px;font-weight:800">My Circles</span><span style="font-size:13px;font-weight:700;color:#4B27D4">See all</span></div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:13px">
+                  <div style="width:42px;height:42px;border-radius:13px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;background:{{ g.hue }}">{{ g.initials }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:14.5px;font-weight:700">{{ g.name }}</div>
+                    <div style="font-size:12px;color:#6B6C7E">Next payout {{ g.next }}</div>
+                  </div>
+                  <div style="text-align:right"><div style="font-size:14px;font-weight:800;color:#4B27D4">{{ g.amt }}</div><div style="font-size:11px;color:#1BA87A;font-weight:700">{{ g.paid }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+            {{ tabHome }}
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">05 · Home Dashboard</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 16px">
+              <span style="color:#1A1B2E">{{ ic.back }}</span>
+              <span style="font-size:17px;font-weight:700">My Wallet</span>
+            </div>
+            <div style="margin:0 20px;background:#1A1B2E;border-radius:24px;padding:24px 22px;color:#fff">
+              <div style="font-size:13px;color:#A9AAC0;font-weight:500">Total Wallet Balance</div>
+              <div style="font-size:33px;font-weight:800;letter-spacing:-0.5px;margin-top:6px">₦125,680.50</div>
+              <div style="display:flex;gap:12px;margin-top:18px">
+                <div style="flex:1;background:rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px"><div style="font-size:11px;color:#A9AAC0">Available</div><div style="font-size:15px;font-weight:700">₦98,450.20</div></div>
+                <div style="flex:1;background:rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px"><div style="font-size:11px;color:#A9AAC0">Savings</div><div style="font-size:15px;font-weight:700">₦27,230.30</div></div>
+              </div>
+            </div>
+            <div style="padding:22px 24px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:52px;height:52px;border-radius:16px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.plus }}</div><span style="font-size:11px;font-weight:600;text-align:center">Add</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:52px;height:52px;border-radius:16px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.arrowUp }}</div><span style="font-size:11px;font-weight:600;text-align:center">Withdraw</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:52px;height:52px;border-radius:16px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.transfer }}</div><span style="font-size:11px;font-weight:600;text-align:center">Transfer</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:52px;height:52px;border-radius:16px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.qr }}</div><span style="font-size:11px;font-weight:600;text-align:center">Scan &amp; Pay</span></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 12px"><span style="font-size:16px;font-weight:800">Recent Transactions</span><span style="font-size:13px;font-weight:700;color:#4B27D4">See all</span></div>
+            <div style="padding:0 20px 6px;display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ txns }}" as="t" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;display:flex;align-items:center;gap:13px;margin-bottom:9px">
+                  <div style="width:40px;height:40px;border-radius:12px;background:#F1F0FB;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ t.iconEl }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.name }}</div><div style="font-size:11.5px;color:#6B6C7E">{{ t.date }}</div></div>
+                  <div style="text-align:right"><div style="font-size:13.5px;font-weight:800;color:{{ t.color }}">{{ t.amt }}</div><div style="font-size:10.5px;color:#1BA87A;font-weight:700">{{ t.tag }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+            {{ tabMore }}
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">06 · Wallet</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">03 · Circles — Rotating Savings</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 22px 16px">
+              <span style="font-size:20px;font-weight:800">My Circles</span>
+              <div style="background:#4B27D4;color:#fff;border-radius:12px;padding:8px 13px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700">{{ ic.plus }}New</div>
+            </div>
+            <div style="margin:0 20px;background:linear-gradient(140deg,#4B27D4,#7C4DFF);border-radius:20px;padding:18px 20px;color:#fff;display:flex;justify-content:space-between">
+              <div><div style="font-size:12px;color:#D9CCFF">Total Circles</div><div style="font-size:26px;font-weight:800">12</div></div>
+              <div style="width:1px;background:rgba(255,255,255,0.2)"></div>
+              <div><div style="font-size:12px;color:#D9CCFF">Total Saved</div><div style="font-size:26px;font-weight:800">₦1,245,680</div></div>
+            </div>
+            <div style="padding:20px 20px 6px;display:flex;flex-direction:column;gap:13px">
+              <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:20px;padding:16px 17px">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="width:44px;height:44px;border-radius:13px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;background:{{ g.hue }}">{{ g.initials }}</div>
+                    <div style="flex:1"><div style="font-size:15px;font-weight:800">{{ g.name }}</div><div style="font-size:12px;color:#6B6C7E">{{ g.meta }}</div></div>
+                    <span style="background:#E4F6EF;color:#1BA87A;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:8px">Active</span>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px">
+                    <div><div style="font-size:11px;color:#6B6C7E">Next payout</div><div style="font-size:13px;font-weight:700">{{ g.next }} · {{ g.amt }}</div></div>
+                    <div style="font-size:11.5px;font-weight:700;color:#1BA87A">{{ g.paid }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            {{ tabCircles }}
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">07 · My Circles</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 16px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Create a Circle</span></div>
+            <div style="padding:0 22px;display:flex;flex-direction:column;gap:15px">
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Circle name</div>
+                <div style="background:#fff;border-radius:14px;padding:15px 16px;font-size:14.5px;font-weight:600">Family Esusu</div>
+              </div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Contribution amount</div>
+                <div style="background:#fff;border-radius:14px;padding:15px 16px;font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px"><span style="color:#4B27D4;font-weight:800">₦</span>10,000</div>
+              </div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Frequency</div>
+                <div style="display:flex;gap:9px">
+                  <div style="flex:1;text-align:center;padding:12px 0;border-radius:12px;background:#fff;color:#6B6C7E;font-size:13px;font-weight:700;border:1.5px solid #EBEBF1">Daily</div>
+                  <div style="flex:1;text-align:center;padding:12px 0;border-radius:12px;background:#4B27D4;color:#fff;font-size:13px;font-weight:700">Weekly</div>
+                  <div style="flex:1;text-align:center;padding:12px 0;border-radius:12px;background:#fff;color:#6B6C7E;font-size:13px;font-weight:700;border:1.5px solid #EBEBF1">Monthly</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <div style="flex:1"><div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Members</div><div style="background:#fff;border-radius:14px;padding:15px 16px;font-size:14.5px;font-weight:600">10</div></div>
+                <div style="flex:1"><div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Start date</div><div style="background:#fff;border-radius:14px;padding:15px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;justify-content:space-between">May 24<span style="color:#4B27D4">{{ ic.calendar }}</span></div></div>
+              </div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#4A4B5E;margin-bottom:7px">Payout order</div>
+                <div style="background:#fff;border-radius:14px;padding:15px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between">AI-optimised (by trust score)<span style="color:#6B6C7E">{{ ic.chevronDown }}</span></div>
+              </div>
+              <div style="background:#EDE7FD;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px">
+                <span style="color:#4B27D4">{{ ic.shield }}</span>
+                <div style="flex:1"><div style="font-size:13.5px;font-weight:800;color:#3A2596">Backup pool protection</div><div style="font-size:11.5px;color:#6B5FB0">Reserve 10% to cover defaults</div></div>
+                <div style="width:40px;height:24px;border-radius:12px;background:#4B27D4;position:relative;flex:none"><span style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff"></span></div>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding:22px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:16px;padding:17px;text-align:center;font-size:16px;font-weight:700">Create Circle &amp; Invite</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">08 · Create Circle</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 12px"><div style="display:flex;align-items:center;gap:16px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Link Bank Account</span></div></div>
+            <div style="padding:0 24px 6px;font-size:13px;color:#6B6C7E;line-height:1.5">Securely link an account to auto-fund your contributions. No manual chasing.</div>
+            <div style="padding:18px 20px 6px;display:flex;flex-direction:column;gap:11px">
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:11px;background:#FF6A2C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">GT</div><span style="flex:1;font-size:14.5px;font-weight:700">GTBank</span><span style="color:#C9CAD6">{{ ic.chevronRight }}</span></div>
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:11px;background:#F58220;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">AB</div><span style="flex:1;font-size:14.5px;font-weight:700">Access Bank</span><span style="color:#C9CAD6">{{ ic.chevronRight }}</span></div>
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:11px;background:#0A2A66;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">FB</div><span style="flex:1;font-size:14.5px;font-weight:700">First Bank</span><span style="color:#C9CAD6">{{ ic.chevronRight }}</span></div>
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:11px;background:#D8112B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">Z</div><span style="flex:1;font-size:14.5px;font-weight:700">Zenith Bank</span><span style="color:#C9CAD6">{{ ic.chevronRight }}</span></div>
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:11px;background:#1A8F5C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">O</div><span style="flex:1;font-size:14.5px;font-weight:700">Opay</span><span style="color:#C9CAD6">{{ ic.chevronRight }}</span></div>
+              <div style="background:#fff;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:14px;border:1.5px dashed #C4B6F5"><div style="width:40px;height:40px;border-radius:11px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.bank }}</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Other banks</div><div style="font-size:11.5px;color:#6B6C7E">Use Open Banking</div></div><span style="color:#4B27D4">{{ ic.chevronRight }}</span></div>
+            </div>
+            <div style="margin-top:auto;padding:18px 24px 32px;display:flex;align-items:center;justify-content:center;gap:8px;color:#6B6C7E;font-size:11.5px;font-weight:600"><span style="color:#1BA87A">{{ ic.lock }}</span>Powered by Open Banking · encrypted end-to-end</div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">09 · Link Bank Account</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 14px"><div style="display:flex;align-items:center;gap:16px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Family Esusu</span></div><span style="color:#1A1B2E">{{ ic.dots }}</span></div>
+            <div style="padding:0 22px">
+              <div style="display:flex;gap:8px;background:#EAEAF0;padding:5px;border-radius:13px">
+                <div style="flex:1;text-align:center;padding:9px 0;border-radius:9px;background:#fff;font-size:12.5px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,0.06)">Overview</div>
+                <div style="flex:1;text-align:center;padding:9px 0;font-size:12.5px;font-weight:600;color:#6B6C7E">Members</div>
+                <div style="flex:1;text-align:center;padding:9px 0;font-size:12.5px;font-weight:600;color:#6B6C7E">Activity</div>
+              </div>
+            </div>
+            <div style="margin:16px 20px 0;background:linear-gradient(140deg,#4B27D4,#7C4DFF);border-radius:20px;padding:18px 20px;color:#fff">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12.5px;color:#D9CCFF">Group Balance</span><span style="color:#D9CCFF">{{ ic.shield }}</span></div>
+              <div style="font-size:29px;font-weight:800;margin-top:4px">₦540,000.00</div>
+            </div>
+            <div style="padding:14px 22px 0;display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B6C7E">Total Contributions</span><span style="font-weight:700">₦540,000</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B6C7E">Backup Pool (10%)</span><span style="font-weight:700;color:#4B27D4">₦54,000</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B6C7E">Available for Payout</span><span style="font-weight:700">₦486,000</span></div>
+            </div>
+            <div style="margin:16px 20px 0;background:#fff;border-radius:18px;padding:16px">
+              <div style="font-size:13.5px;font-weight:800;margin-bottom:12px">Payment Summary</div>
+              <div style="display:flex;align-items:center;gap:16px">
+                <div style="width:78px;height:78px;border-radius:50%;flex:none;background:conic-gradient(#1BA87A 0 70%,#E0930F 70% 90%,#E23D6B 90% 100%);display:flex;align-items:center;justify-content:center"><div style="width:52px;height:52px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-size:16px;font-weight:800">10</span><span style="font-size:8.5px;color:#6B6C7E">members</span></div></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:7px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:50%;background:#1BA87A"></span>Paid (7)<span style="margin-left:auto;font-weight:700">₦490,000</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:50%;background:#E0930F"></span>Pending (2)<span style="margin-left:auto;font-weight:700">₦100,000</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:50%;background:#E23D6B"></span>Late (1)<span style="margin-left:auto;font-weight:700">₦40,000</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="margin:14px 20px 0;background:#1A1B2E;border-radius:18px;padding:15px 18px;color:#fff;display:flex;align-items:center;justify-content:space-between">
+              <div><div style="font-size:11.5px;color:#A9AAC0">Next payout in</div><div style="font-size:18px;font-weight:800;margin-top:2px">03d : 12h : 45m</div></div>
+              <div style="text-align:right"><div style="font-size:11.5px;color:#A9AAC0">Receiver</div><div style="font-size:14px;font-weight:800">Tunde O.</div></div>
+            </div>
+            <div style="margin-top:auto;padding:18px 22px 30px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">{{ ic.share }}Share Group Report</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">10 · Group Dashboard</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 6px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Members Status</span></div>
+            <div style="padding:8px 24px 4px;font-size:12px;color:#6B6C7E">Week 6 of 10 · ₦100,000 pool this cycle</div>
+            <div style="padding:8px 20px 6px;display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ members }}" as="m" hint-placeholder-count="10">
+                <div style="background:#fff;border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                  <div style="width:38px;height:38px;border-radius:50%;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px">{{ m.initials }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">{{ m.name }}</div><div style="font-size:11px;color:#6B6C7E">{{ m.amt }}</div></div>
+                  <span style="font-size:11px;font-weight:700;padding:5px 11px;border-radius:8px;color:{{ m.color }};background:{{ m.bg }}">{{ m.status }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">11 · Members Status</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px;position:relative">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 0"><span style="color:#1A1B2E">{{ ic.back }}</span></div>
+            <div style="position:absolute;top:120px;left:40px;width:8px;height:8px;border-radius:2px;background:#E0930F;transform:rotate(20deg)"></div>
+            <div style="position:absolute;top:150px;right:56px;width:10px;height:10px;border-radius:2px;background:#4B27D4;transform:rotate(-15deg)"></div>
+            <div style="position:absolute;top:200px;left:70px;width:7px;height:7px;border-radius:50%;background:#E23D6B"></div>
+            <div style="position:absolute;top:175px;right:90px;width:8px;height:8px;border-radius:50%;background:#1BA87A"></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center">
+              <div style="width:96px;height:96px;border-radius:50%;background:#E4F6EF;display:flex;align-items:center;justify-content:center;color:#1BA87A;margin-bottom:24px"><div style="width:64px;height:64px;border-radius:50%;background:#1BA87A;color:#fff;display:flex;align-items:center;justify-content:center">{{ ic.check }}</div></div>
+              <div style="font-size:22px;font-weight:800">Payout Successful!</div>
+              <div style="font-size:40px;font-weight:800;color:#4B27D4;margin-top:14px;letter-spacing:-1px">₦100,000</div>
+              <div style="font-size:14px;color:#6B6C7E;margin-top:10px;line-height:1.5">has been sent to<br><span style="color:#1A1B2E;font-weight:800">Tunde O.</span> · May 24, 2024 · 6:05 PM</div>
+              <div style="margin-top:16px;background:#fff;border-radius:12px;padding:10px 16px;font-size:12.5px;color:#6B6C7E;font-weight:600">Sent to GTBank ••••1234</div>
+            </div>
+            <div style="padding:20px 24px 34px;display:flex;flex-direction:column;gap:11px">
+              <div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:15px;font-weight:700">View Receipt</div>
+              <div style="border:1.5px solid #D6D2EE;color:#4B27D4;border-radius:15px;padding:14px;text-align:center;font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">{{ ic.share }}Share with Group</div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">12 · Payout Success</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">04 · AI Trust &amp; Risk</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 6px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Your Trust Score</span></div>
+            <div style="margin:14px 20px 0;background:#fff;border-radius:22px;padding:20px 20px 10px;display:flex;flex-direction:column;align-items:center">
+              <svg width="230" height="132" viewBox="0 0 230 132" style="display:block">
+                <defs><linearGradient id="trust-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E23D6B"/><stop offset="0.5" stop-color="#E0930F"/><stop offset="1" stop-color="#1BA87A"/></linearGradient></defs>
+                <path d="M22 120 A93 93 0 0 1 208 120" fill="none" stroke="#EDEDF3" stroke-width="17" stroke-linecap="round"/>
+                <path d="M22 120 A93 93 0 0 1 208 120" fill="none" stroke="url(#trust-g)" stroke-width="17" stroke-linecap="round" stroke-dasharray="292" stroke-dashoffset="44"/>
+              </svg>
+              <div style="margin-top:-46px;text-align:center"><div style="font-size:44px;font-weight:800;letter-spacing:-1px">720</div><div style="display:inline-block;background:#E4F6EF;color:#1BA87A;font-size:12.5px;font-weight:800;padding:4px 14px;border-radius:9px;margin-top:2px">Good</div></div>
+              <div style="margin-top:14px;font-size:12px;color:#6B6C7E">300 &nbsp;·&nbsp; poor &nbsp;→&nbsp; excellent &nbsp;·&nbsp; 850</div>
+            </div>
+            <div style="padding:16px 22px 6px"><div style="font-size:13.5px;font-weight:800;margin-bottom:10px">What builds your score</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:11px"><span style="color:#1BA87A">{{ ic.checkCircle }}</span><span style="flex:1;font-size:13px;font-weight:600">On-time contributions</span><span style="font-size:12px;font-weight:800;color:#1BA87A">Excellent</span></div>
+                <div style="display:flex;align-items:center;gap:11px"><span style="color:#1BA87A">{{ ic.checkCircle }}</span><span style="flex:1;font-size:13px;font-weight:600">Circle participation</span><span style="font-size:12px;font-weight:800;color:#1BA87A">High</span></div>
+                <div style="display:flex;align-items:center;gap:11px"><span style="color:#E0930F">{{ ic.clock }}</span><span style="flex:1;font-size:13px;font-weight:600">Account activity</span><span style="font-size:12px;font-weight:800;color:#E0930F">Fair</span></div>
+              </div>
+            </div>
+            <div style="margin:14px 20px 0;background:#EDE7FD;border-radius:18px;padding:16px 18px">
+              <div style="display:flex;align-items:center;gap:9px;color:#3A2596;font-size:13px;font-weight:800;margin-bottom:8px">{{ ic.sparkle }}Unlocked for you</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px">
+                <span style="background:#fff;color:#4B27D4;font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:9px">Micro-loans</span>
+                <span style="background:#fff;color:#4B27D4;font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:9px">Early payouts</span>
+                <span style="background:#fff;color:#4B27D4;font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:9px">Pay upfront (PartPay)</span>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding:18px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:14.5px;font-weight:700">How to improve my score</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">13 · Trust Score</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 12px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">AI Risk &amp; Alerts</span></div>
+            <div style="margin:0 20px;background:#FCE6EC;border-radius:18px;padding:16px 18px">
+              <div style="display:flex;align-items:center;gap:9px;color:#C62A55;font-size:13.5px;font-weight:800">{{ ic.alert }}High Risk Alert</div>
+              <div style="font-size:13px;color:#8A3450;line-height:1.5;margin-top:8px"><span style="font-weight:800">Blessing A.</span> is at high risk of default based on recent payment behaviour.</div>
+              <div style="margin-top:12px;background:#fff;color:#C62A55;border-radius:11px;padding:10px;text-align:center;font-size:12.5px;font-weight:700">View member details</div>
+            </div>
+            <div style="margin:16px 20px 0;background:#fff;border-radius:20px;padding:18px 20px 12px;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:12.5px;font-weight:700;color:#6B6C7E;align-self:flex-start;margin-bottom:6px">Member risk score</div>
+              <svg width="200" height="116" viewBox="0 0 200 116" style="display:block">
+                <path d="M18 104 A82 82 0 0 1 182 104" fill="none" stroke="#EDEDF3" stroke-width="15" stroke-linecap="round"/>
+                <path d="M18 104 A82 82 0 0 1 182 104" fill="none" stroke="#E0930F" stroke-width="15" stroke-linecap="round" stroke-dasharray="258" stroke-dashoffset="90"/>
+              </svg>
+              <div style="margin-top:-42px;text-align:center"><div style="font-size:38px;font-weight:800">65</div><div style="display:inline-block;background:#FCF1DD;color:#E0930F;font-size:11.5px;font-weight:800;padding:3px 12px;border-radius:8px">Moderate Risk</div></div>
+            </div>
+            <div style="padding:16px 22px 6px"><div style="font-size:13.5px;font-weight:800;margin-bottom:11px">AI insights</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;align-items:flex-start;gap:11px"><span style="color:#E23D6B;margin-top:1px">{{ ic.alert }}</span><span style="flex:1;font-size:12.5px;line-height:1.5;color:#4A4B5E">2 late payments in the last 4 weeks</span></div>
+                <div style="display:flex;align-items:flex-start;gap:11px"><span style="color:#E0930F;margin-top:1px">{{ ic.clock }}</span><span style="flex:1;font-size:12.5px;line-height:1.5;color:#4A4B5E">Reduced account balance pattern detected</span></div>
+                <div style="display:flex;align-items:flex-start;gap:11px"><span style="color:#4B27D4;margin-top:1px">{{ ic.sparkle }}</span><span style="flex:1;font-size:12.5px;line-height:1.5;color:#4A4B5E">Probability of default: <span style="font-weight:800;color:#1A1B2E">68%</span></span></div>
+              </div>
+            </div>
+            <div style="margin:12px 20px 0;background:#EDE7FD;border-radius:14px;padding:13px 16px;font-size:11.5px;color:#5B4FA8;font-weight:600;display:flex;align-items:center;gap:9px"><span style="color:#4B27D4">{{ ic.shield }}</span>Backup pool is ready to protect this cycle's payout.</div>
+            <div style="margin-top:auto;padding:18px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:14.5px;font-weight:700">Notify group members</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">14 · AI Risk &amp; Alerts</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">05 · PartPay — Installments</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 8px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Choose what to pay</span></div>
+            <div style="padding:2px 24px 8px;font-size:13px;color:#6B6C7E;line-height:1.5">Split any big bill into installments you can afford.</div>
+            <div style="padding:12px 22px 6px;display:grid;grid-template-columns:1fr 1fr;gap:13px">
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.home }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">Rent</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">Pay your house rent</div></div>
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#E7F0FF;color:#2A6FDB;display:flex;align-items:center;justify-content:center">{{ ic.book }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">School Fees</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">Tuition &amp; levies</div></div>
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#FCE6EC;color:#E23D6B;display:flex;align-items:center;justify-content:center">{{ ic.health }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">Medical Bills</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">Hospital &amp; care</div></div>
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#FCF1DD;color:#E0930F;display:flex;align-items:center;justify-content:center">{{ ic.box }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">Products</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">Phones, appliances</div></div>
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center">{{ ic.briefcase }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">Business</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">POS, inventory</div></div>
+              <div style="background:#fff;border-radius:20px;padding:18px 16px"><div style="width:46px;height:46px;border-radius:14px;background:#EFEFF4;color:#6B6C7E;display:flex;align-items:center;justify-content:center">{{ ic.dots }}</div><div style="font-size:14.5px;font-weight:800;margin-top:12px">Other</div><div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">Any other payment</div></div>
+            </div>
+            <div style="margin-top:auto;padding:16px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:16px;text-align:center;font-size:15px;font-weight:700">Continue</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">15 · Choose What to Pay</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 12px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Select payment model</span></div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px">
+              <div style="background:#fff;border-radius:20px;padding:18px 18px;border:2px solid #4B27D4">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <div style="width:44px;height:44px;border-radius:13px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;flex:none">{{ ic.calendar }}</div>
+                  <div style="flex:1"><div style="font-size:15px;font-weight:800">Pay Gradually</div><div style="font-size:12px;color:#6B6C7E;margin-top:2px">You pay the vendor in installments until complete.</div></div>
+                  <div style="width:22px;height:22px;border-radius:50%;border:2px solid #4B27D4;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:11px;height:11px;border-radius:50%;background:#4B27D4"></span></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px;margin-top:14px">
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#1BA87A">{{ ic.check }}</span>Lower interest</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#1BA87A">{{ ic.check }}</span>Longer repayment period</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#1BA87A">{{ ic.check }}</span>Builds good payment history</div>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:20px;padding:18px 18px;border:1.5px solid #EBEBF1">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <div style="width:44px;height:44px;border-radius:13px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center;flex:none">{{ ic.wallet }}</div>
+                  <div style="flex:1"><div style="font-size:15px;font-weight:800">CirclePay Pays Upfront</div><div style="font-size:12px;color:#6B6C7E;margin-top:2px">We pay the vendor now; you repay us over time.</div></div>
+                  <div style="width:22px;height:22px;border-radius:50%;border:2px solid #D6D2EE;flex:none"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px;margin-top:14px">
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#1BA87A">{{ ic.check }}</span>Get what you need immediately</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#1BA87A">{{ ic.check }}</span>Spread repayment over time</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4A4B5E"><span style="color:#E0930F">{{ ic.sparkle }}</span>Requires Trust Score 700+</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding:18px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:16px;text-align:center;font-size:15px;font-weight:700">Continue</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">16 · Select Payment Model</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 14px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Plan Dashboard</span></div>
+            <div style="margin:0 20px;background:#fff;border-radius:20px;padding:16px 18px">
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:13px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.home }}</div><div style="flex:1"><div style="font-size:14.5px;font-weight:800">Rent — 2 Bedroom Apt</div><div style="font-size:11.5px;color:#6B6C7E">Ikeja, Lagos · Pay Gradually</div></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:16px"><div><div style="font-size:11px;color:#6B6C7E">Total</div><div style="font-size:17px;font-weight:800">₦600,000</div></div><div style="text-align:right"><div style="font-size:11px;color:#6B6C7E">Paid</div><div style="font-size:17px;font-weight:800;color:#1BA87A">₦100,000</div></div></div>
+              <div style="margin-top:12px;height:9px;border-radius:5px;background:#EDEDF3;overflow:hidden"><div style="width:17%;height:100%;background:linear-gradient(90deg,#4B27D4,#7C4DFF)"></div></div>
+              <div style="margin-top:6px;font-size:11px;color:#6B6C7E;font-weight:600">17% paid · 11 payments left</div>
+            </div>
+            <div style="margin:14px 20px 0;background:#1A1B2E;border-radius:18px;padding:15px 18px;color:#fff;display:flex;align-items:center;justify-content:space-between">
+              <div><div style="font-size:11.5px;color:#A9AAC0">Next payment</div><div style="font-size:16px;font-weight:800;margin-top:2px">Jun 24 · ₦50,000</div></div>
+              <span style="background:#FCF1DD;color:#E0930F;font-size:11px;font-weight:800;padding:5px 11px;border-radius:8px">19 days left</span>
+            </div>
+            <div style="padding:16px 22px 4px;font-size:13.5px;font-weight:800">Payment schedule</div>
+            <div style="padding:0 22px;display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EBEBF1"><span style="color:#1BA87A">{{ ic.checkCircle }}</span><div style="flex:1"><div style="font-size:13px;font-weight:700">May 24 · Initial</div></div><span style="font-size:13px;font-weight:700">₦50,000</span><span style="font-size:10.5px;color:#1BA87A;font-weight:700;margin-left:8px">Paid</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EBEBF1"><span style="color:#1BA87A">{{ ic.checkCircle }}</span><div style="flex:1"><div style="font-size:13px;font-weight:700">May 24 · Month 1</div></div><span style="font-size:13px;font-weight:700">₦50,000</span><span style="font-size:10.5px;color:#1BA87A;font-weight:700;margin-left:8px">Paid</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EBEBF1"><span style="color:#E0930F">{{ ic.clock }}</span><div style="flex:1"><div style="font-size:13px;font-weight:700">Jun 24 · Month 2</div></div><span style="font-size:13px;font-weight:700">₦50,000</span><span style="font-size:10.5px;color:#E0930F;font-weight:700;margin-left:8px">Due</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0"><span style="color:#C9CAD6">{{ ic.clock }}</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#8A8B98">Jul 24 · Month 3</div></div><span style="font-size:13px;font-weight:700;color:#8A8B98">₦50,000</span><span style="font-size:10.5px;color:#A6A7B5;font-weight:700;margin-left:8px">Upcoming</span></div>
+            </div>
+            <div style="margin-top:auto;padding:16px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:14.5px;font-weight:700">Make Early Payment</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">17 · Plan Dashboard</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">06 · CircleSupport — Fundraising</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 14px"><span style="font-size:19px;font-weight:800">Support &amp; Donations</span><span style="color:#1A1B2E">{{ ic.bell }}</span></div>
+            <div style="margin:0 20px;background:linear-gradient(140deg,#5B2EE6,#7C4DFF);border-radius:20px;padding:18px 20px;color:#fff;display:flex;align-items:center;gap:14px">
+              <div style="flex:1"><div style="font-size:15.5px;font-weight:800">Create a Support Campaign</div><div style="font-size:12px;color:#D9CCFF;margin-top:3px">Raise funds for what matters</div><div style="margin-top:12px;display:inline-block;background:#fff;color:#4B27D4;border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700">Create Campaign</div></div>
+              <div style="width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;color:#fff">{{ ic.heart }}</div>
+            </div>
+            <div style="padding:16px 20px 4px;display:flex;gap:14px;overflow:hidden">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:none"><div style="width:46px;height:46px;border-radius:14px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.heart }}</div><span style="font-size:10.5px;font-weight:600">Burial</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:none"><div style="width:46px;height:46px;border-radius:14px;background:#FCF1DD;color:#E0930F;display:flex;align-items:center;justify-content:center">{{ ic.gift }}</div><span style="font-size:10.5px;font-weight:600">Birthday</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:none"><div style="width:46px;height:46px;border-radius:14px;background:#FCE6EC;color:#E23D6B;display:flex;align-items:center;justify-content:center">{{ ic.health }}</div><span style="font-size:10.5px;font-weight:600">Medical</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:none"><div style="width:46px;height:46px;border-radius:14px;background:#E7F0FF;color:#2A6FDB;display:flex;align-items:center;justify-content:center">{{ ic.star }}</div><span style="font-size:10.5px;font-weight:600">Wedding</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:none"><div style="width:46px;height:46px;border-radius:14px;background:#EFEFF4;color:#6B6C7E;display:flex;align-items:center;justify-content:center">{{ ic.dots }}</div><span style="font-size:10.5px;font-weight:600">More</span></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px 10px"><span style="font-size:15px;font-weight:800">Active Campaigns</span><span style="font-size:12.5px;font-weight:700;color:#4B27D4">See all</span></div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ campaigns }}" as="c" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:14px 15px">
+                  <div style="display:flex;align-items:center;gap:11px"><div style="width:38px;height:38px;border-radius:11px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">{{ c.initials }}</div><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</div><div style="font-size:11px;color:#6B6C7E">{{ c.by }}</div></div><span style="font-size:10.5px;font-weight:700;color:#E0930F">{{ c.left }}</span></div>
+                  <div style="margin-top:11px;height:7px;border-radius:4px;background:#EDEDF3;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#4B27D4,#7C4DFF);width:{{ c.pct }}%"></div></div>
+                  <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:11.5px"><span style="font-weight:800;color:#4B27D4">{{ c.raised }}</span><span style="color:#6B6C7E">{{ c.sup }} supporters</span></div>
+                </div>
+              </sc-for>
+            </div>
+            {{ tabSupport }}
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">18 · Campaigns</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 12px"><div style="display:flex;align-items:center;gap:16px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Campaign Details</span></div><span style="color:#1A1B2E">{{ ic.share }}</span></div>
+            <div style="padding:0 20px"><image-slot id="camp-hero" style="width:300px;height:150px" shape="rounded" radius="18" placeholder="Campaign cover photo"></image-slot></div>
+            <div style="padding:14px 22px 0">
+              <div style="font-size:18px;font-weight:800;line-height:1.25">Support Mama Chinedu's Burial</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span style="background:#EDE7FD;color:#4B27D4;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:8px">Burial Support</span><span style="font-size:11.5px;color:#6B6C7E">by Chidi M.</span></div>
+            </div>
+            <div style="margin:14px 20px 0;background:#fff;border-radius:18px;padding:16px 18px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:24px;font-weight:800">₦256,500</span><span style="font-size:15px;font-weight:800;color:#4B27D4">51%</span></div>
+              <div style="font-size:11.5px;color:#6B6C7E;margin-top:2px">raised of ₦500,000 goal</div>
+              <div style="margin-top:11px;height:9px;border-radius:5px;background:#EDEDF3;overflow:hidden"><div style="width:51%;height:100%;background:linear-gradient(90deg,#4B27D4,#7C4DFF)"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:14px;text-align:center">
+                <div><div style="font-size:16px;font-weight:800">124</div><div style="font-size:10.5px;color:#6B6C7E">Supporters</div></div>
+                <div><div style="font-size:16px;font-weight:800">3</div><div style="font-size:10.5px;color:#6B6C7E">Days left</div></div>
+                <div><div style="font-size:16px;font-weight:800">₦243,500</div><div style="font-size:10.5px;color:#6B6C7E">To go</div></div>
+              </div>
+            </div>
+            <div style="padding:14px 22px 0"><div style="font-size:13px;font-weight:800;margin-bottom:5px">About this campaign</div><div style="font-size:12.5px;color:#6B6C7E;line-height:1.55">Our beloved mother passed on peacefully. We're raising funds to support the burial and related expenses. Any support is deeply appreciated.</div></div>
+            <div style="margin:12px 20px 0;background:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:11px"><div style="width:36px;height:36px;border-radius:50%;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">CM</div><div style="flex:1"><div style="font-size:12.5px;font-weight:700">Chidi M.</div><div style="font-size:10.5px;color:#6B6C7E">Campaign owner · Verified</div></div><span style="color:#1BA87A">{{ ic.checkCircle }}</span></div>
+            <div style="margin-top:auto;padding:16px 22px 30px;display:flex;flex-direction:column;gap:10px">
+              <div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:15px;font-weight:700">Donate Now</div>
+              <div style="border:1.5px solid #D6D2EE;color:#4B27D4;border-radius:15px;padding:13px;text-align:center;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">{{ ic.share }}Share Campaign</div>
+            </div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">19 · Campaign Details</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 14px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Donate to Campaign</span></div>
+            <div style="margin:0 20px;background:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:11px"><div style="width:38px;height:38px;border-radius:11px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">CM</div><div style="flex:1"><div style="font-size:13px;font-weight:800">Support Mama Chinedu's Burial</div><div style="font-size:10.5px;color:#6B6C7E">by Chidi M.</div></div></div>
+            <div style="padding:16px 22px 4px;font-size:13px;font-weight:800">Select amount</div>
+            <div style="padding:0 22px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+              <div style="background:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800">₦1,000</div>
+              <div style="background:#4B27D4;color:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800">₦5,000</div>
+              <div style="background:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800">₦10,000</div>
+              <div style="background:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800">₦20,000</div>
+              <div style="background:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800">₦50,000</div>
+              <div style="background:#fff;border-radius:12px;padding:13px 0;text-align:center;font-size:14px;font-weight:800;color:#4B27D4">Other</div>
+            </div>
+            <div style="padding:16px 22px 4px;font-size:13px;font-weight:800">Payment method</div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:10px">
+              <div style="background:#fff;border-radius:14px;padding:14px 15px;display:flex;align-items:center;gap:12px;border:2px solid #4B27D4"><span style="color:#4B27D4">{{ ic.wallet }}</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">CirclePay Wallet</div><div style="font-size:11px;color:#6B6C7E">Balance ₦98,450.20</div></div><div style="width:20px;height:20px;border-radius:50%;border:2px solid #4B27D4;display:flex;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:50%;background:#4B27D4"></span></div></div>
+              <div style="background:#fff;border-radius:14px;padding:14px 15px;display:flex;align-items:center;gap:12px"><span style="color:#6B6C7E">{{ ic.card }}</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Bank Transfer / Card</div><div style="font-size:11px;color:#6B6C7E">Pay via bank or debit card</div></div><div style="width:20px;height:20px;border-radius:50%;border:2px solid #D6D2EE"></div></div>
+              <div style="background:#fff;border-radius:14px;padding:14px 15px;display:flex;align-items:center;gap:12px"><span style="color:#6B6C7E">{{ ic.phone }}</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">USSD</div><div style="font-size:11px;color:#6B6C7E">Instant offline payment</div></div><div style="width:20px;height:20px;border-radius:50%;border:2px solid #D6D2EE"></div></div>
+              <div style="background:#fff;border-radius:14px;padding:14px 15px;display:flex;align-items:center;gap:12px"><span style="color:#6B6C7E">{{ ic.mapPin }}</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Agent Cash Deposit</div><div style="font-size:11px;color:#6B6C7E">Pay cash at any agent/kiosk</div></div><div style="width:20px;height:20px;border-radius:50%;border:2px solid #D6D2EE"></div></div>
+            </div>
+            <div style="margin-top:auto;padding:16px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:16px;text-align:center;font-size:15px;font-weight:700">Continue</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">20 · Donate to Campaign</div>
+        </div>
+
+      </div>
+    </section>
+
+        <section>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px">
+        <span style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4B27D4;background:#E7E0FB;padding:7px 14px;border-radius:9px">07 · Agent / Kiosk Network</span>
+        <span style="height:1px;flex:1;background:#CFD0DC"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:34px">
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 14px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Agent Banking</span></div>
+            <div style="margin:0 20px;background:#1A1B2E;border-radius:22px;padding:20px 22px;color:#fff;position:relative;overflow:hidden">
+              <div style="position:absolute;top:-30px;right:-30px;width:110px;height:110px;border-radius:50%;background:rgba(124,77,255,0.28)"></div>
+              <div style="font-size:11.5px;color:#A9AAC0">Your CirclePay ID</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:4px"><span style="font-size:22px;font-weight:800;letter-spacing:1px;font-family:'JetBrains Mono',monospace">CPAI-7834-5689</span><span style="color:#7C4DFF">{{ ic.share }}</span></div>
+              <div style="margin-top:16px;font-size:11.5px;color:#A9AAC0">Wallet balance</div>
+              <div style="font-size:24px;font-weight:800">₦125,680.50</div>
+            </div>
+            <div style="padding:18px 22px 4px;font-size:13.5px;font-weight:800">Agent services</div>
+            <div style="padding:6px 22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center">{{ ic.arrowDown }}</div><span style="font-size:10px;font-weight:600;text-align:center">Deposit</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#FCE6EC;color:#E23D6B;display:flex;align-items:center;justify-content:center">{{ ic.arrowUp }}</div><span style="font-size:10px;font-weight:600;text-align:center">Withdraw</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.card }}</div><span style="font-size:10px;font-weight:600;text-align:center">Scratch Card</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#E7F0FF;color:#2A6FDB;display:flex;align-items:center;justify-content:center">{{ ic.transfer }}</div><span style="font-size:10px;font-weight:600;text-align:center">Transfer</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#FCF1DD;color:#E0930F;display:flex;align-items:center;justify-content:center">{{ ic.phone }}</div><span style="font-size:10px;font-weight:600;text-align:center">Airtime</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ ic.wallet }}</div><span style="font-size:10px;font-weight:600;text-align:center">Bills</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#E4F6EF;color:#1BA87A;display:flex;align-items:center;justify-content:center">{{ ic.mapPin }}</div><span style="font-size:10px;font-weight:600;text-align:center">Find Agent</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="width:50px;height:50px;border-radius:15px;background:#EFEFF4;color:#6B6C7E;display:flex;align-items:center;justify-content:center">{{ ic.clock }}</div><span style="font-size:10px;font-weight:600;text-align:center">History</span></div>
+            </div>
+            <div style="margin:18px 20px 0;background:#EDE7FD;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:12px;background:#4B27D4;color:#fff;display:flex;align-items:center;justify-content:center">{{ ic.mapPin }}</div><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#3A2596">4 agents near you</div><div style="font-size:11px;color:#6B5FB0">Closest 0.2 km · Yaba</div></div><span style="color:#4B27D4">{{ ic.chevronRight }}</span></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">21 · Agent Banking Home</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 12px"><div style="display:flex;align-items:center;gap:16px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Find Nearby Agents</span></div><span style="color:#4B27D4">{{ ic.filter }}</span></div>
+            <div style="padding:0 20px 12px"><div style="background:#fff;border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:10px;color:#6B6C7E"><span>{{ ic.search }}</span><span style="font-size:13.5px">Search location</span></div></div>
+            <div style="padding:0 20px;position:relative"><image-slot id="agent-map" style="width:300px;height:158px" shape="rounded" radius="18" placeholder="Map of nearby agents"></image-slot><div style="position:absolute;top:60px;left:130px;width:30px;height:30px;border-radius:50%;background:#4B27D4;border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;color:#fff"><span style="transform:scale(0.75)">{{ ic.mapPin }}</span></div></div>
+            <div style="padding:16px 20px 6px;display:flex;flex-direction:column;gap:11px">
+              <sc-for list="{{ agents }}" as="a" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;display:flex;align-items:center;gap:12px">
+                  <div style="width:42px;height:42px;border-radius:12px;background:#EDE7FD;color:#4B27D4;display:flex;align-items:center;justify-content:center">{{ a.iconEl }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800">{{ a.name }}</div><div style="font-size:11px;color:#6B6C7E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.addr }}</div></div>
+                  <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:#4B27D4">{{ a.dist }}</div><div style="font-size:10.5px;font-weight:700;color:{{ a.openColor }}">{{ a.openLabel }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:auto;padding:16px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:15px;text-align:center;font-size:14.5px;font-weight:700">View on Map</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">22 · Find Nearby Agents</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 12px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Redeem Scratch Card</span></div>
+            <div style="padding:0 24px 4px;font-size:13px;color:#6B6C7E;line-height:1.5">Buy a CirclePay card from any agent, scratch it, and enter the serial to fund your wallet instantly.</div>
+            <div style="margin:16px 20px 0;background:linear-gradient(135deg,#4B27D4,#7C4DFF);border-radius:18px;padding:20px;color:#fff;position:relative;overflow:hidden">
+              <div style="position:absolute;bottom:-24px;right:-10px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,0.12)"></div>
+              <div style="font-size:11px;color:#D9CCFF;letter-spacing:1px">CIRCLEPAY SAVINGS CARD</div>
+              <div style="margin-top:14px;font-size:15px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:2px">₦5,000</div>
+              <div style="margin-top:4px;font-size:11px;color:#D9CCFF">Scratch panel below to reveal serial</div>
+            </div>
+            <div style="padding:18px 22px 4px;font-size:12.5px;font-weight:800">Enter serial number</div>
+            <div style="padding:0 22px;display:flex;gap:8px">
+              <div style="flex:1;background:#fff;border-radius:12px;padding:14px 0;text-align:center;font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;border:1.5px solid #4B27D4">4821</div>
+              <div style="flex:1;background:#fff;border-radius:12px;padding:14px 0;text-align:center;font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;border:1.5px solid #4B27D4">9037</div>
+              <div style="flex:1;background:#fff;border-radius:12px;padding:14px 0;text-align:center;font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#C9CAD6;border:1.5px solid #EBEBF1">••••</div>
+              <div style="flex:1;background:#fff;border-radius:12px;padding:14px 0;text-align:center;font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#C9CAD6;border:1.5px solid #EBEBF1">••••</div>
+            </div>
+            <div style="padding:18px 22px 6px;font-size:12.5px;font-weight:800">Card value</div>
+            <div style="padding:0 22px;display:flex;gap:9px">
+              <div style="flex:1;text-align:center;padding:11px 0;border-radius:11px;background:#fff;font-size:13px;font-weight:700;border:1.5px solid #EBEBF1">₦1,000</div>
+              <div style="flex:1;text-align:center;padding:11px 0;border-radius:11px;background:#4B27D4;color:#fff;font-size:13px;font-weight:700">₦5,000</div>
+              <div style="flex:1;text-align:center;padding:11px 0;border-radius:11px;background:#fff;font-size:13px;font-weight:700;border:1.5px solid #EBEBF1">₦10,000</div>
+            </div>
+            <div style="margin-top:auto;padding:20px 22px 32px"><div style="background:#4B27D4;color:#fff;border-radius:15px;padding:16px;text-align:center;font-size:15px;font-weight:700">Add to Wallet</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">23 · Redeem Scratch Card</div>
+        </div>
+
+        <div style="width:340px;flex:none">
+          <div style="width:340px;background:#F4F5F9;border-radius:38px;box-shadow:0 20px 55px rgba(35,28,80,0.13);border:1px solid #E4E5EE;overflow:hidden;display:flex;flex-direction:column;min-height:724px">
+            {{ sb }}
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 24px 12px"><span style="color:#1A1B2E">{{ ic.back }}</span><span style="font-size:17px;font-weight:700">Withdraw at Kiosk</span></div>
+            <div style="padding:0 24px 4px;font-size:13px;color:#6B6C7E;line-height:1.5">Show this one-time code to any CirclePay agent to collect cash.</div>
+            <div style="margin:16px 20px 0;background:#1A1B2E;border-radius:22px;padding:24px 20px;color:#fff;text-align:center">
+              <div style="font-size:11.5px;color:#A9AAC0;letter-spacing:1px">WITHDRAWAL CODE</div>
+              <div style="font-size:44px;font-weight:800;letter-spacing:10px;margin-top:8px;font-family:'JetBrains Mono',monospace">872 641</div>
+              <div style="display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:rgba(226,61,107,0.18);color:#FF9DB6;padding:6px 13px;border-radius:9px;font-size:11.5px;font-weight:700"><span style="transform:scale(0.7)">{{ ic.clock }}</span>Expires in 4:52</div>
+            </div>
+            <div style="margin:16px 20px 0;background:#fff;border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B6C7E">Amount</span><span style="font-weight:700">₦20,000.00</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B6C7E">Transaction fee</span><span style="font-weight:700">₦100.00</span></div>
+              <div style="height:1px;background:#EBEBF1"></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:800">Total deduction</span><span style="font-weight:800;color:#4B27D4">₦20,100.00</span></div>
+            </div>
+            <div style="margin:14px 20px 0;background:#FCE6EC;border-radius:14px;padding:13px 15px;display:flex;align-items:flex-start;gap:10px"><span style="color:#C62A55;margin-top:1px">{{ ic.alert }}</span><span style="flex:1;font-size:11.5px;line-height:1.5;color:#8A3450;font-weight:600">Never share this code with anyone except the agent completing your withdrawal.</span></div>
+            <div style="margin-top:auto;padding:16px 22px 32px"><div style="border:1.5px solid #D6D2EE;color:#4B27D4;border-radius:15px;padding:14px;text-align:center;font-size:14.5px;font-weight:700">Cancel Request</div></div>
+          </div>
+          <div style="margin-top:15px;font-size:13px;font-weight:600;color:#4A4B5E;text-align:center">24 · Withdraw at Kiosk</div>
+        </div>
+
+      </div>
+    </section>
+
+    <div id="__end"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  build() {
+    const P = (d, o) => { o = o || {}; return React.createElement('path', { d, fill: o.f ? 'currentColor' : 'none', stroke: o.f ? 'none' : 'currentColor', strokeWidth: o.sw || 1.85, strokeLinecap: 'round', strokeLinejoin: 'round', key: d.slice(0, 6) + Math.random() }); };
+    const S = (paths, size) => React.createElement('svg', { width: size || 22, height: size || 22, viewBox: '0 0 24 24', fill: 'none', style: { display: 'block', flex: 'none' } }, paths);
+    const ic = {
+      back: S([P('M15 18l-6-6 6-6')]),
+      chevronRight: S([P('M9 6l6 6-6 6')], 20),
+      chevronDown: S([P('M6 9l6 6 6-6')], 20),
+      bell: S([P('M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9'), P('M13.7 21a2 2 0 01-3.4 0')]),
+      eye: S([P('M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z'), P('M12 15a3 3 0 100-6 3 3 0 000 6')]),
+      plus: S([P('M12 5v14M5 12h14')], 20),
+      arrowUp: S([P('M12 19V5M6 11l6-6 6 6')], 20),
+      arrowDown: S([P('M12 5v14M6 13l6 6 6-6')], 20),
+      transfer: S([P('M17 3l4 4-4 4M21 7H7M7 21l-4-4 4-4M3 17h14')], 20),
+      dots: S([P('M5 12h.01', { sw: 2.6 }), P('M12 12h.01', { sw: 2.6 }), P('M19 12h.01', { sw: 2.6 })], 20),
+      home: S([P('M3 11l9-8 9 8'), P('M5 10v10h14V10')]),
+      users: S([P('M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2'), P('M10 11a4 4 0 100-8 4 4 0 000 8'), P('M22 21v-2a4 4 0 00-3-3.87'), P('M17 3.13a4 4 0 010 7.75')]),
+      heart: S([P('M20.8 5.6a5.4 5.4 0 00-7.7 0L12 6.7l-1.1-1.1a5.4 5.4 0 10-7.7 7.7L12 22l8.8-8.7a5.4 5.4 0 000-7.7z')]),
+      grid: S([P('M4 4h6v6H4zM14 4h6v6h-6zM14 14h6v6h-6zM4 14h6v6H4z')]),
+      menu: S([P('M4 7h16M4 12h16M4 17h16')]),
+      check: S([P('M20 6L9 17l-5-5')], 20),
+      checkCircle: S([P('M12 22a10 10 0 100-20 10 10 0 000 20'), P('M8 12l3 3 5-6')]),
+      shield: S([P('M12 2l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V5z'), P('M9 12l2 2 4-4')]),
+      lock: S([P('M5 11h14v10H5zM8 11V7a4 4 0 018 0v4')]),
+      phone: S([P('M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.4-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z')]),
+      mapPin: S([P('M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z'), P('M12 13a3 3 0 100-6 3 3 0 000 6')]),
+      search: S([P('M11 19a8 8 0 100-16 8 8 0 000 16'), P('M21 21l-4.3-4.3')], 20),
+      camera: S([P('M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z'), P('M12 17a4 4 0 100-8 4 4 0 000 8')]),
+      card: S([P('M2 5h20v14H2z'), P('M2 10h20')]),
+      bank: S([P('M3 21h18'), P('M5 10v8M10 10v8M14 10v8M19 10v8'), P('M12 3l9 4H3z')]),
+      clock: S([P('M12 22a10 10 0 100-20 10 10 0 000 20'), P('M12 7v5l3 2')]),
+      share: S([P('M4 12v8a1 1 0 001 1h14a1 1 0 001-1v-8'), P('M16 6l-4-4-4 4'), P('M12 2v13')], 20),
+      star: S([P('M12 3l2.7 5.8 6.3.8-4.6 4.3 1.2 6.3L12 17.6 6.4 20.5l1.2-6.3L3 9.9l6.3-.8z', { f: true })], 20),
+      alert: S([P('M12 3l9.5 17H2.5z'), P('M12 10v4'), P('M12 18h.01', { sw: 2.4 })]),
+      qr: S([P('M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z'), P('M14 14h2v2h-2zM19 14h1M14 19v1M19 19h1')]),
+      gift: S([P('M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7C10.5 3 7 3 7 5.5S9.5 7 12 7zM12 7c1.5-4 5-4 5-1.5S14.5 7 12 7z')]),
+      filter: S([P('M22 4H2l8 9v6l4 2v-8z')], 20),
+      edit: S([P('M12 20h9'), P('M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z')], 20),
+      download: S([P('M12 3v12M7 10l5 5 5-5M4 21h16')], 20),
+      trophy: S([P('M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z'), P('M7 5H4v1a3 3 0 003 3M17 5h3v1a3 3 0 01-3 3')]),
+      wallet: S([P('M3 7h16a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z'), P('M3 7l2-3h11l1 3'), P('M17 13h.01', { sw: 2.4 })]),
+      book: S([P('M6 3h11a1 1 0 011 1v16H7a3 3 0 01-3-3V6a3 3 0 013-3z'), P('M8 3v14')]),
+      health: S([P('M9.5 3h5v6h6v5h-6v6h-5v-6h-6V9h6z')]),
+      box: S([P('M21 8l-9-5-9 5 9 5 9-5z'), P('M3 8v8l9 5 9-5V8'), P('M12 13v8')]),
+      briefcase: S([P('M3 8h18v12H3z'), P('M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2'), P('M3 13h18', { sw: 1.5 })]),
+      calendar: S([P('M5 5h14v16H5zM3 9h18M8 3v4M16 3v4')]),
+      faceId: S([P('M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2'), P('M9 10v1M15 10v1M12 10v3l-1 1', { sw: 1.6 }), P('M9 15s1 1.5 3 1.5 3-1.5 3-1.5', { sw: 1.6 })]),
+      key: S([P('M15 8a5 5 0 10-4.9 6l1.9 1.9 2 .1.1 2 2 .1.1 2 2.9.9v-3l-4-4A5 5 0 0015 8z')]),
+      sparkle: S([P('M12 3l1.8 4.8L18.6 9l-4.8 1.8L12 15.6l-1.8-4.8L5.4 9l4.8-1.2z', { f: true }), P('M19 14l.9 2.1 2.1.9-2.1.9L19 20l-.9-2.1-2.1-.9 2.1-.9z', { f: true })], 20)
+    };
+    const battery = React.createElement('svg', { width: 26, height: 13, viewBox: '0 0 26 13', fill: 'none' }, [
+      React.createElement('rect', { key: 'a', x: 1, y: 1, width: 21, height: 11, rx: 3.2, stroke: 'currentColor', strokeOpacity: 0.35, strokeWidth: 1.2 }),
+      React.createElement('rect', { key: 'b', x: 3, y: 3, width: 15, height: 7, rx: 1.6, fill: 'currentColor' }),
+      React.createElement('rect', { key: 'c', x: 23.4, y: 4, width: 2, height: 5, rx: 1, fill: 'currentColor', fillOpacity: 0.4 })
+    ]);
+    const signal = React.createElement('svg', { width: 18, height: 12, viewBox: '0 0 18 12', fill: 'none' }, [
+      React.createElement('rect', { key: 1, x: 0, y: 7, width: 3, height: 5, rx: 1, fill: 'currentColor' }),
+      React.createElement('rect', { key: 2, x: 5, y: 4, width: 3, height: 8, rx: 1, fill: 'currentColor' }),
+      React.createElement('rect', { key: 3, x: 10, y: 1.5, width: 3, height: 10.5, rx: 1, fill: 'currentColor' }),
+      React.createElement('rect', { key: 4, x: 15, y: 1.5, width: 3, height: 10.5, rx: 1, fill: 'currentColor', fillOpacity: 0.35 })
+    ]);
+    const wifi = React.createElement('svg', { width: 17, height: 12, viewBox: '0 0 17 13', fill: 'none' }, [
+      React.createElement('path', { key: 1, d: 'M1 4.5C3 2.5 5.5 1.5 8.5 1.5S14 2.5 16 4.5', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' }),
+      React.createElement('path', { key: 2, d: 'M3.5 7.2C5 5.9 6.7 5.3 8.5 5.3s3.5.6 5 1.9', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' }),
+      React.createElement('path', { key: 3, d: 'M8.5 10.5l.01-.01', stroke: 'currentColor', strokeWidth: 2.4, strokeLinecap: 'round' })
+    ]);
+    const mkSb = (color) => React.createElement('div', { style: { height: '46px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px 0', flex: 'none', color } },
+      React.createElement('span', { style: { fontSize: '14px', fontWeight: 800 } }, '9:41'),
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '7px' } }, signal, wifi, battery)
+    );
+
+    const tabItem = (icon, label, on) => React.createElement('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', color: on ? '#4B27D4' : '#A6A7B5', flex: 1 } },
+      React.createElement('span', { style: { display: 'flex' } }, icon),
+      React.createElement('span', { style: { fontSize: '10.5px', fontWeight: on ? 700 : 600 } }, label)
+    );
+    const fab = React.createElement('div', { style: { flex: 'none', width: '60px', display: 'flex', justifyContent: 'center' } },
+      React.createElement('div', { style: { width: '58px', height: '58px', borderRadius: '50%', background: 'linear-gradient(150deg,#5B2EE6,#7C4DFF)', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', marginTop: '-26px', boxShadow: '0 10px 22px rgba(91,46,230,0.45)' } },
+        ic.qr, React.createElement('span', { style: { fontSize: '8.5px', fontWeight: 700 } }, 'Scan'))
+    );
+    const mkTab = (active) => React.createElement('div', { style: { flex: 'none', marginTop: 'auto', display: 'flex', alignItems: 'flex-end', padding: '11px 22px 30px', background: '#fff', borderTop: '1px solid #EEEEF3' } },
+      tabItem(ic.home, 'Home', active === 'home'),
+      tabItem(ic.users, 'Circles', active === 'circles'),
+      fab,
+      tabItem(ic.heart, 'Support', active === 'support'),
+      tabItem(ic.menu, 'More', active === 'more')
+    );
+
+    return {
+      ic, sb: mkSb('#1A1B2E'), sbLight: mkSb('#ffffff'),
+      tabHome: mkTab('home'), tabCircles: mkTab('circles'), tabSupport: mkTab('support'), tabMore: mkTab('more')
+    };
+  }
+
+  renderVals() {
+    if (!this._a) this._a = this.build();
+    const ic = this._a.ic;
+    return Object.assign({}, this._a, {
+      members: [
+        { initials: 'TO', name: 'Tunde O.', tag: 'Next receiver', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'GO', name: 'You (Godfrey)', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'BA', name: 'Blessing A.', tag: 'High risk', status: 'Late', color: '#E23D6B', bg: '#FCE6EC', amt: '₦10,000' },
+        { initials: 'CM', name: 'Chidi M.', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'AK', name: 'Aisha K.', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'EN', name: 'Emeka N.', tag: '', status: 'Pending', color: '#E0930F', bg: '#FCF1DD', amt: '₦10,000' },
+        { initials: 'RI', name: 'Ruth I.', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'SB', name: 'Segun B.', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' },
+        { initials: 'JE', name: 'Joy E.', tag: '', status: 'Pending', color: '#E0930F', bg: '#FCF1DD', amt: '₦10,000' },
+        { initials: 'DU', name: 'Daniel U.', tag: '', status: 'Paid', color: '#1BA87A', bg: '#E4F6EF', amt: '₦10,000' }
+      ],
+      groups: [
+        { initials: 'FE', name: 'Family Esusu', meta: '10 members · Weekly', amt: '₦100,000', next: 'May 24', paid: '7/10 paid', hue: '#4B27D4' },
+        { initials: 'FA', name: 'Friends Ajo Group', meta: '12 members · Daily', amt: '₦12,000', next: 'Today, 6:00 PM', paid: '9/12 paid', hue: '#E0930F' },
+        { initials: 'BS', name: 'Business Savings Circle', meta: '6 members · Monthly', amt: '₦50,000', next: 'May 25', paid: '4/6 paid', hue: '#1BA87A' }
+      ],
+      txns: [
+        { iconEl: ic.arrowDown, name: 'Auto Deduction · Family Esusu', date: 'Today, 9:00 AM', amt: '−₦10,000', color: '#1A1B2E', tag: 'Success' },
+        { iconEl: ic.arrowUp, name: 'Payout received · Ajo Group', date: 'Yesterday, 2:30 PM', amt: '+₦120,000', color: '#1BA87A', tag: 'Success' },
+        { iconEl: ic.gift, name: 'Donation · Mama Chinedu Burial', date: 'May 18, 4:10 PM', amt: '−₦5,000', color: '#1A1B2E', tag: 'Success' },
+        { iconEl: ic.card, name: 'Scratch card top-up', date: 'May 17, 8:15 AM', amt: '+₦5,000', color: '#1BA87A', tag: 'Success' }
+      ],
+      campaigns: [
+        { initials: 'CM', title: "Support Mama Chinedu's Burial", by: 'by Chidi M.', raised: '₦256,500', goal: '₦500,000', pct: 51, sup: '124', left: '3 days left' },
+        { initials: 'JE', title: "John's Birthday Support", by: 'by Joy E.', raised: '₦75,200', goal: '₦100,000', pct: 75, sup: '81', left: '2 days left' },
+        { initials: 'TO', title: "Help Tunde's Medical Bills", by: 'by Tunde O.', raised: '₦120,000', goal: '₦300,000', pct: 40, sup: '73', left: '5 days left' }
+      ],
+      donations: [
+        { initials: 'JE', name: 'Joy E.', amt: '₦5,000', ago: '2 mins ago' },
+        { initials: 'EN', name: 'Emeka N.', amt: '₦2,000', ago: '5 mins ago' },
+        { initials: 'SB', name: 'Segun B.', amt: '₦10,000', ago: '10 mins ago' },
+        { initials: 'AN', name: 'Anonymous', amt: '₦1,000', ago: '18 mins ago' }
+      ],
+      agents: [
+        { name: 'Mega Plaza Kiosk', addr: '12 Herbert Macaulay Way, Yaba', dist: '0.2 km', iconEl: ic.grid, openLabel: 'Open', openColor: '#1BA87A' },
+        { name: 'Peace & Sons Store', addr: '20 Allen Avenue, Ikeja', dist: '1.3 km', iconEl: ic.bank, openLabel: 'Open', openColor: '#1BA87A' },
+        { name: "Blessing's Point", addr: "45 Alaba Int'l Market, Ojo", dist: '2.1 km', iconEl: ic.grid, openLabel: 'Open', openColor: '#1BA87A' },
+        { name: 'Tomiwa Ventures', addr: '7 Computer Village, Ikeja', dist: '2.8 km', iconEl: ic.briefcase, openLabel: 'Closed', openColor: '#E23D6B' }
+      ]
+    });
+  }
+}
+</script>
+</body>
+</html>

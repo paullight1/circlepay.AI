@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: circlepay-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: circlepay
+      POSTGRES_PASSWORD: circlepay
+      POSTGRES_DB: circlepay
+    ports:
+      - "5433:5432"
+    volumes:
+      - circlepay_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U circlepay -d circlepay"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  circlepay_pgdata:

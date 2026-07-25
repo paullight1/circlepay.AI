@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npx expo export -p web",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/circles/:id/members", "destination": "/circles/[id]/members" },
+    { "source": "/circles/:id/payout", "destination": "/circles/[id]/payout" },
+    { "source": "/circles/:id", "destination": "/circles/[id]" },
+    { "source": "/campaigns/:id/donate", "destination": "/campaigns/[id]/donate" },
+    { "source": "/campaigns/:id/receipt", "destination": "/campaigns/[id]/receipt" },
+    { "source": "/campaigns/:id", "destination": "/campaigns/[id]" },
+    { "source": "/partpay/:id", "destination": "/partpay/[id]" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

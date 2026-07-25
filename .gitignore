@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+web-build/
+
+# Expo
+.expo/
+circlepay-app/expo-env.d.ts
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Local agent + editor tooling
+.claude/settings.local.json
+.impeccable/
+.labx/
+
+# Logs
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# TypeScript
+*.tsbuildinfo
+
+# OS
+.DS_Store
