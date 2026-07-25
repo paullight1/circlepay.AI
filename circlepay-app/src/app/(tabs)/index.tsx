@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useIsFocused, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { formatDate, timeAgo } from '@/lib/format';
@@ -12,6 +12,7 @@ import {
 } from '@/theme/tokens';
 import {
   AmountText, Avatar, Card, ListRow, ProgressBar, Screen, SectionHeader, StatusPill,
+  WelcomeModal,
 } from '@/ui';
 import { IconBubble } from '@/ui/ListRow';
 
@@ -126,6 +127,20 @@ export default function Home() {
   const transactions = useStore((s) => s.transactions);
   const hasUnread = useStore((s) => s.notifications.some((n) => !n.read));
   const [hidden, setHidden] = useState(false);
+
+  // First-run greeting. `onboarded` keeps it out of the auth/onboarding flow
+  // entirely, and because `seenWelcome` is persisted and set by both exits, it
+  // fires exactly once per account — never again after that.
+  const onboarded = useStore((s) => s.onboarded);
+  const seenWelcome = useStore((s) => s.seenWelcome);
+  const setSeenWelcome = useStore((s) => s.setSeenWelcome);
+  const focused = useIsFocused();
+
+  const closeWelcome = useCallback(() => setSeenWelcome(true), [setSeenWelcome]);
+  const openCircles = useCallback(() => {
+    setSeenWelcome(true);
+    router.push('/(tabs)/circles');
+  }, [setSeenWelcome, router]);
 
   const total = wallet.available + wallet.onHold;
 
@@ -265,6 +280,13 @@ export default function Home() {
           <TxRow key={t.id} tx={t} last={i === arr.length - 1} />
         ))}
       </Card>
+
+      {/* Overlay only — <Modal> is absolutely positioned, so it adds no layout. */}
+      <WelcomeModal
+        visible={focused && onboarded && !seenWelcome}
+        onClose={closeWelcome}
+        onPrimary={openCircles}
+      />
     </Screen>
   );
 }

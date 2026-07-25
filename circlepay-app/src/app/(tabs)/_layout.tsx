@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useIsFocused, useRouter } from 'expo-router';
 import { Tabs, type BottomTabBarProps } from 'expo-router/js-tabs';
+import { useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useCoachMark } from '@/lib/coachTour';
 import { colors, fonts, shadow } from '@/theme/tokens';
+import { CoachMark } from '@/ui';
 
 const TAB_ICONS: Record<string, { icon: keyof typeof Ionicons.glyphMap; label: string }> = {
   index: { icon: 'home', label: 'Home' },
@@ -17,6 +20,17 @@ const TAB_ICONS: Record<string, { icon: keyof typeof Ionicons.glyphMap; label: s
 function CirclePayTabBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+
+  // The tour's first stop points at the Scan & Pay button, which lives here in
+  // the tab bar rather than on the Home screen — so the Home mark is mounted
+  // here too, where a ref can actually reach it.
+  const scanRef = useRef<View | null>(null);
+  // `useIsFocused` covers the tab group as a whole (false while a screen like
+  // /scan is pushed over it); `state` narrows that to the Home tab specifically.
+  const tabsFocused = useIsFocused();
+  const onHomeTab = state.routes[state.index]?.name === 'index';
+  const homeMark = useCoachMark('home', tabsFocused && onHomeTab);
+
   const routes = state.routes.filter((r) => TAB_ICONS[r.name]);
   const left = routes.slice(0, 2);
   const right = routes.slice(2);
@@ -41,16 +55,32 @@ function CirclePayTabBar({ state, navigation }: BottomTabBarProps) {
   };
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
-      {left.map(renderTab)}
-      <Pressable onPress={() => router.push('/scan')} style={styles.fabWrap} hitSlop={8}>
-        <View style={styles.fab}>
-          <Ionicons name="scan" size={24} color={colors.onPrimary} />
-        </View>
-        <Text style={styles.fabLabel}>Scan & Pay</Text>
-      </Pressable>
-      {right.map(renderTab)}
-    </View>
+    <>
+      <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+        {left.map(renderTab)}
+        <Pressable
+          ref={scanRef}
+          collapsable={false}
+          onPress={() => router.push('/scan')}
+          style={styles.fabWrap}
+          hitSlop={8}>
+          <View style={styles.fab}>
+            <Ionicons name="scan" size={24} color={colors.onPrimary} />
+          </View>
+          <Text style={styles.fabLabel}>Scan & Pay</Text>
+        </Pressable>
+        {right.map(renderTab)}
+      </View>
+
+      <CoachMark
+        visible={homeMark.visible}
+        targetRef={scanRef}
+        title={homeMark.title}
+        body={homeMark.body}
+        onDismiss={homeMark.onDismiss}
+        onSkipAll={homeMark.onSkipAll}
+      />
+    </>
   );
 }
 

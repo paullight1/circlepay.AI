@@ -1,11 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useIsFocused, useRouter } from 'expo-router';
+import { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useCoachMark } from '@/lib/coachTour';
 import { confirm } from '@/lib/dialogs';
 import { useStore } from '@/store/useStore';
 import { colors, fonts, spacing } from '@/theme/tokens';
-import { Avatar, Card, ListRow, Screen, SectionHeader, StatusPill } from '@/ui';
+import { Avatar, Card, CoachMark, ListRow, Screen, SectionHeader, StatusPill } from '@/ui';
 import { IconBubble } from '@/ui/ListRow';
 
 /** More tab — hub for everything not on the main tabs. */
@@ -13,6 +15,11 @@ export default function More() {
   const router = useRouter();
   const user = useStore((s) => s.user);
   const resetApp = useStore((s) => s.resetApp);
+
+  // Tour stop 4 — the "Trust Score" row under AI & Security.
+  const trustRef = useRef<View | null>(null);
+  const focused = useIsFocused();
+  const trustMark = useCoachMark('more', focused);
 
   return (
     <Screen>
@@ -46,8 +53,12 @@ export default function More() {
 
       <SectionHeader title="AI & Security" />
       <Card padded={false} style={styles.group}>
-        <ListRow title="Trust Score" subtitle="Your AI-powered financial reputation" chevron
-          left={<IconBubble name="shield-checkmark-outline" />} onPress={() => router.push('/trust/score')} />
+        {/* Wrapper only exists so the coach mark has a node to measure —
+            `ListRow` is a Pressable and does not forward a ref. */}
+        <View ref={trustRef} collapsable={false}>
+          <ListRow title="Trust Score" subtitle="Your AI-powered financial reputation" chevron
+            left={<IconBubble name="shield-checkmark-outline" />} onPress={() => router.push('/trust/score')} />
+        </View>
         <ListRow title="AI Risk & Alerts" subtitle="Risk monitoring across your circles" chevron
           left={<IconBubble name="pulse-outline" color={colors.danger} bg={colors.dangerBg} />}
           onPress={() => router.push('/trust/risk')} />
@@ -71,6 +82,15 @@ export default function More() {
       </Card>
 
       <Text style={styles.footer}>CirclePay AI · Save Together. Pay Smart. Grow Better.</Text>
+
+      <CoachMark
+        visible={trustMark.visible}
+        targetRef={trustRef}
+        title={trustMark.title}
+        body={trustMark.body}
+        onDismiss={trustMark.onDismiss}
+        onSkipAll={trustMark.onSkipAll}
+      />
     </Screen>
   );
 }

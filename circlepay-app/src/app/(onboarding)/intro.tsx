@@ -10,6 +10,7 @@ import {
 import Animated, {
   Extrapolation,
   interpolate,
+  runOnJS,
   type SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -70,9 +71,17 @@ export default function Intro() {
   const heroHeight = Math.round(height * 0.45);
   const last = index === SLIDES.length - 1;
 
+  // Page index is derived from scroll position rather than onMomentumScrollEnd,
+  // which react-native-web does not fire reliably — and web is a deploy target.
+  const page = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler({
     onScroll: (e) => {
       scrollX.value = e.contentOffset.x;
+      const next = Math.round(e.contentOffset.x / Math.max(width, 1));
+      if (next !== page.value) {
+        page.value = next;
+        runOnJS(setIndex)(next);
+      }
     },
   });
 
@@ -109,9 +118,6 @@ export default function Intro() {
         showsHorizontalScrollIndicator={false}
         onScroll={onScroll}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={(e) =>
-          setIndex(Math.round(e.nativeEvent.contentOffset.x / width))
-        }
         style={styles.flex}>
         {SLIDES.map((slide, i) => (
           <SlideView

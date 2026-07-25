@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useIsFocused, useRouter } from 'expo-router';
+import { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useCoachMark } from '@/lib/coachTour';
 import { formatDate, formatNaira } from '@/lib/format';
 import type { Circle } from '@/store/types';
 import { useStore } from '@/store/useStore';
 import { avatarColor, colors, fonts, gradients, initials, radius, spacing } from '@/theme/tokens';
-import { AmountText, Button, Card, ProgressBar, Screen, ScreenHeader, SectionHeader, StatusPill } from '@/ui';
+import { AmountText, Button, Card, CoachMark, ProgressBar, Screen, ScreenHeader, SectionHeader, StatusPill } from '@/ui';
 import { IconBubble } from '@/ui/ListRow';
 
 const FREQ_LABEL: Record<Circle['frequency'], string> = {
@@ -28,6 +30,11 @@ function poolOf(c: Circle): number {
 export default function MyCircles() {
   const router = useRouter();
   const circles = useStore((s) => s.circles);
+
+  // Tour stop 2 — the "Next Payout" block on the first circle in the list.
+  const payoutRef = useRef<View | null>(null);
+  const focused = useIsFocused();
+  const payoutMark = useCoachMark('circles', focused);
 
   const totalSaved = circles.reduce(
     (sum, c) => sum + paidCount(c) * c.amountPerMember + c.backupPoolBalance,
@@ -69,7 +76,7 @@ export default function MyCircles() {
 
       <SectionHeader title="Your Circles" />
       <View style={styles.list}>
-        {circles.map((c) => {
+        {circles.map((c, i) => {
           const paid = paidCount(c);
           return (
             <Card
@@ -89,7 +96,7 @@ export default function MyCircles() {
               </View>
 
               <View style={styles.rowMid}>
-                <View>
+                <View ref={i === 0 ? payoutRef : undefined} collapsable={false}>
                   <Text style={styles.payoutLabel}>Next Payout</Text>
                   <Text style={styles.payoutDate}>{formatDate(c.nextPayoutDate)}</Text>
                 </View>
@@ -106,6 +113,15 @@ export default function MyCircles() {
           );
         })}
       </View>
+
+      <CoachMark
+        visible={payoutMark.visible}
+        targetRef={payoutRef}
+        title={payoutMark.title}
+        body={payoutMark.body}
+        onDismiss={payoutMark.onDismiss}
+        onSkipAll={payoutMark.onSkipAll}
+      />
     </Screen>
   );
 }
