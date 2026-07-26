@@ -13,8 +13,9 @@
 ## Global Constraints
 
 - **Working directory is `circlepay-app/`.** Every command below runs from there.
-- **THERE IS NO TEST SUITE IN THIS WORKSPACE.** Do not create one, do not invent a test command, do not claim tests pass. Verification per task is `npx tsc --noEmit`, `npm run lint`, and the scripted manual walk in that task's steps. This overrides the usual TDD cycle.
+- **THERE IS NO TEST SUITE IN THIS WORKSPACE.** Do not create one, do not invent a test command, do not claim tests pass. Verification per task is `npx tsc --noEmit`, a scoped lint, and the scripted manual walk in that task's steps. This overrides the usual TDD cycle.
 - `npx tsc --noEmit` must pass at the end of every task. There is no `typecheck` script in this package.
+- **`npm run lint` does NOT pass in this repo and never did.** The baseline at commit `983f349` is **47 problems (36 errors, 11 warnings)**, all pre-existing, concentrated in `react-hooks/set-state-in-effect`, `react-hooks/refs` and `@typescript-eslint/array-type` across `src/app/*` and two `src/ui` files. Lint **only your own files** — `npx eslint <the files you touched>` — and require those to be clean. Do not "fix" unrelated files to make the whole run green; that is a separate cleanup task, deliberately out of scope. Re-check the total at the end and confirm it has not grown past 47.
 - **Never import from `@react-navigation/*`** — not installed. expo-router v57 vendors it. Use `expo-router` and `expo-router/js-tabs`.
 - **Never hardcode a hex colour or font family string.** Use `@/theme/tokens` (`colors`, `gradients`, `radius`, `spacing`, `fonts`, `shadow`).
 - **Icons are Ionicons only**, via `@expo/vector-icons`.
@@ -61,6 +62,7 @@
 **Files:**
 - Modify: `src/store/types.ts`
 - Modify: `src/store/seed.ts`
+- Modify: `src/app/trust/notifications.tsx` — holds `TYPE_ICONS: Record<NotifType, …>`, an **exhaustive** map. Widening `NotifType` fails `tsc` (TS2741) until this gains a `savings` entry, so it is part of this task, not a later one.
 
 **Interfaces:**
 - Consumes: nothing.
@@ -128,6 +130,14 @@ In the `LinkedAccount` interface, add after `last4`:
   first4?: string;           // "1234" — renders "GTBank · 1234 **** **** 5678"
 ```
 
+Widening `NotifType` breaks `src/app/trust/notifications.tsx`, whose `TYPE_ICONS` is an exhaustive `Record<NotifType, …>`. Add the matching entry there:
+
+```ts
+  savings: { name: 'sync-circle', color: colors.success, bg: colors.successBg },
+```
+
+`Transaction.category` needs no equivalent — no exhaustive record is keyed on it.
+
 - [ ] **Step 3: Add `first4` to the seeded accounts**
 
 Replace `seedLinkedAccounts` in `src/store/seed.ts`:
@@ -141,7 +151,7 @@ export const seedLinkedAccounts: LinkedAccount[] = [
 
 - [ ] **Step 4: Seed three plans**
 
-Add to `src/store/seed.ts`. Import `SavingsPlan` and `SavingsRun` in the existing type import at the top of the file, and `daysFromNow` / `minutesAgo` / `uid` are already imported from `@/lib/format` — verify before adding.
+Add to `src/store/seed.ts`. Import **only** `SavingsPlan` in the existing type import — the `runs` arrays are inline literals contextually typed by `SavingsPlan`, so importing `SavingsRun` too would be an unused import and fail lint. `daysFromNow` is already imported and already accepts negative day offsets, so no new format helper is needed.
 
 ```ts
 /**
@@ -753,7 +763,8 @@ git commit -m "Add savings plan store slice and catch-up engine"
 
 **Interfaces:**
 - Consumes: tokens, `BrandTile`.
-- Produces: `<StepDots count={number} current={number} />` (`current` is 0-based); `<BankPicker banks={string[]} selected?={string} busy?={string} onSelect={(bank: string) => void} />`; `BANKS: string[]` exported from `BankPicker`.
+- Produces: `<StepDots count={number} current={number} />` (`current` is 0-based); `<BankPicker banks={readonly string[]} selected?={string} busy?={string} onSelect={(bank: string) => void} />`; `BANKS` exported from `BankPicker`.
+- **`BANKS` is `readonly ["GTBank", …]`, not `string[]`** — the code block below uses `as const`. The `banks` prop is `readonly string[]` so both `BANKS` and a plain array satisfy it, but do not assign `BANKS` to a mutable `string[]` without spreading.
 
 - [ ] **Step 1: Write `StepDots`**
 

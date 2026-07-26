@@ -1,6 +1,7 @@
 export { AmountText } from './AmountText';
 export { AUTH_STEPS, AuthProgress, type AuthStep } from './AuthProgress';
 export { Avatar } from './Avatar';
+export { BANKS, BankPicker } from './BankPicker';
 export { BrandTile } from './BrandTile';
 export { Button } from './Button';
 export { Card } from './Card';
@@ -17,5 +18,6 @@ export { Screen } from './Screen';
 export { ScreenHeader } from './ScreenHeader';
 export { SectionHeader } from './SectionHeader';
 export { StatusPill } from './StatusPill';
+export { StepDots } from './StepDots';
 export { Stepper } from './Stepper';
 export { WelcomeModal } from './WelcomeModal';

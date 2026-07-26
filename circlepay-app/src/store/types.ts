@@ -9,7 +9,7 @@ export type CampaignCategory =
   | 'Burial' | 'Birthday' | 'Medical' | 'Wedding' | 'School Fees' | 'Community';
 export type PayCategory =
   | 'Rent' | 'School Fees' | 'Medical Bills' | 'Consumer Products' | 'Business Services' | 'Other';
-export type NotifType = 'alert' | 'payment' | 'payout' | 'backup' | 'campaign' | 'system';
+export type NotifType = 'alert' | 'payment' | 'payout' | 'backup' | 'campaign' | 'system' | 'savings';
 export type BillCategoryId =
   | 'airtime' | 'data' | 'electricity' | 'cable-tv' | 'betting'
   | 'internet' | 'education' | 'hotels' | 'transport';
@@ -42,7 +42,7 @@ export interface Transaction {
   direction: 'in' | 'out';
   date: string;            // ISO
   status: TxStatus;
-  category: 'circle' | 'wallet' | 'partpay' | 'campaign' | 'agent' | 'fee' | 'bill';
+  category: 'circle' | 'wallet' | 'partpay' | 'campaign' | 'agent' | 'fee' | 'bill' | 'savings';
 }
 
 export interface CircleMember {
@@ -133,8 +133,44 @@ export interface LinkedAccount {
   id: string;
   bank: string;              // "GTBank"
   last4: string;             // "1234"
+  first4?: string;           // "1234" — renders "GTBank · 1234 **** **** 5678"
   active: boolean;
   purpose?: string;          // "Family Esusu · Weekly"
+}
+
+export type SavingsPlanType = 'daily' | 'weekly' | 'instalment';
+export type SavingsPlanStatus = 'active' | 'paused' | 'completed';
+
+/** One executed deduction attempt. Newest first inside `SavingsPlan.runs`. */
+export interface SavingsRun {
+  id: string;
+  date: string;              // ISO — when it actually ran
+  amount: number;
+  status: 'success' | 'failed';
+  reason?: string;           // "Insufficient balance"
+}
+
+/**
+ * A bank-funded recurring deduction. When `circleId` or `partPayId` is set the
+ * run delegates to that domain's existing store action, so the circle or plan
+ * really advances instead of the money landing in a parallel pot.
+ */
+export interface SavingsPlan {
+  id: string;
+  name: string;              // "Daily Savings Plan"
+  type: SavingsPlanType;
+  amount: number;
+  frequency: Frequency;
+  accountId: string;         // LinkedAccount.id — the debit source
+  startDate: string;         // ISO
+  endDate?: string;          // ISO, optional
+  nextRunAt: string;         // ISO — next deduction, 08:00 local
+  status: SavingsPlanStatus;
+  totalSaved: number;        // sum of successful runs
+  runs: SavingsRun[];
+  circleId?: string;
+  partPayId?: string;
+  createdAt: string;
 }
 
 export interface AppNotification {

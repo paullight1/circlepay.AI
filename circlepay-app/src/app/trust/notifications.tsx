@@ -14,6 +14,7 @@ const TYPE_ICONS: Record<NotifType, { name: Parameters<typeof IconBubble>[0]['na
   backup: { name: 'shield-checkmark', color: colors.primary, bg: colors.chip },
   campaign: { name: 'heart', color: colors.accent, bg: colors.chip },
   system: { name: 'information-circle', color: colors.info, bg: colors.infoBg },
+  savings: { name: 'sync-circle', color: colors.success, bg: colors.successBg },
 };
 
 export default function NotificationsScreen() {

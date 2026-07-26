@@ -6,7 +6,7 @@ import { electricityToken } from '@/lib/billers';
 import { daysFromNow, minutesAgo } from '@/lib/format';
 import type {
   AgentLocation, AppNotification, BillPayment, Campaign, Circle, LinkedAccount,
-  PartPayPlan, Transaction, TrustSignal, User, Wallet,
+  PartPayPlan, SavingsPlan, Transaction, TrustSignal, User, Wallet,
 } from './types';
 
 export const seedUser: User = {
@@ -266,8 +266,70 @@ export const seedAgents: AgentLocation[] = [
 ];
 
 export const seedLinkedAccounts: LinkedAccount[] = [
-  { id: 'la-1', bank: 'GTBank', last4: '1234', active: true, purpose: 'Family Esusu · Weekly' },
-  { id: 'la-2', bank: 'Opay', last4: '5678', active: true, purpose: 'Rent Payment Plan · Monthly' },
+  { id: 'la-1', bank: 'GTBank', last4: '1234', first4: '0582', active: true, purpose: 'Family Esusu · Weekly' },
+  { id: 'la-2', bank: 'Opay', last4: '5678', first4: '2210', active: true, purpose: 'Rent Payment Plan · Monthly' },
+];
+
+/**
+ * Mirrors the mockup's Active Plans list, but named and priced from records
+ * that actually exist in this seed: a circle-linked plan's amount must equal
+ * `circle.amountPerMember` or the contribution would be wrong.
+ */
+export const seedSavingsPlans: SavingsPlan[] = [
+  {
+    id: 'sp-daily',
+    name: 'Daily Savings Plan',
+    type: 'daily',
+    amount: 1000,
+    frequency: 'daily',
+    accountId: 'la-1',
+    startDate: daysFromNow(-30, 8, 0),
+    nextRunAt: daysFromNow(1, 8, 0),
+    status: 'active',
+    totalSaved: 12000,
+    runs: [
+      { id: 'sr-d1', date: daysFromNow(0, 8, 0), amount: 1000, status: 'success' },
+      { id: 'sr-d2', date: daysFromNow(-1, 8, 0), amount: 1000, status: 'success' },
+      { id: 'sr-d3', date: daysFromNow(-2, 8, 0), amount: 1000, status: 'success' },
+    ],
+    createdAt: daysFromNow(-30, 8, 0),
+  },
+  {
+    id: 'sp-esusu',
+    name: 'Weekly Contribution – Family Esusu',
+    type: 'weekly',
+    amount: 10000,
+    frequency: 'weekly',
+    accountId: 'la-1',
+    circleId: 'c-family-esusu',
+    startDate: daysFromNow(-56, 8, 0),
+    nextRunAt: daysFromNow(4, 8, 0),
+    status: 'active',
+    totalSaved: 80000,
+    runs: [
+      { id: 'sr-e1', date: daysFromNow(-3, 8, 0), amount: 10000, status: 'success' },
+      { id: 'sr-e2', date: daysFromNow(-10, 8, 0), amount: 10000, status: 'success' },
+    ],
+    createdAt: daysFromNow(-56, 8, 0),
+  },
+  {
+    id: 'sp-school',
+    name: 'Instalment – School Fees Term 2',
+    type: 'instalment',
+    amount: 30000,
+    frequency: 'monthly',
+    accountId: 'la-2',
+    partPayId: 'p-school',
+    startDate: daysFromNow(-60, 8, 0),
+    nextRunAt: daysFromNow(14, 8, 0),
+    status: 'active',
+    totalSaved: 60000,
+    runs: [
+      { id: 'sr-s1', date: daysFromNow(-16, 8, 0), amount: 30000, status: 'success' },
+      { id: 'sr-s2', date: daysFromNow(-46, 8, 0), amount: 30000, status: 'success' },
+    ],
+    createdAt: daysFromNow(-60, 8, 0),
+  },
 ];
 
 export const seedBills: BillPayment[] = [
