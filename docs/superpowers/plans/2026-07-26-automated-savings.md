@@ -742,8 +742,8 @@ The persisted shape changed, and an existing install would rehydrate without `sa
 
 - [ ] **Step 9: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 10: Commit**
 
@@ -945,8 +945,8 @@ export { StepDots } from './StepDots';
 
 - [ ] **Step 4: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 5: Commit**
 
@@ -1243,8 +1243,8 @@ const TAB_ICONS: Record<string, { icon: keyof typeof Ionicons.glyphMap; label: s
 
 - [ ] **Step 6: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 7: Walk it**
 
@@ -1492,8 +1492,8 @@ const styles = StyleSheet.create({
 
 - [ ] **Step 5: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 6: Walk it**
 
@@ -1716,8 +1716,8 @@ const styles = StyleSheet.create({
 
 - [ ] **Step 3: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass. Verify every Ionicons name used actually exists — a bad name renders an invisible glyph rather than erroring.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown. Verify every Ionicons name used actually exists — a bad name renders an invisible glyph rather than erroring.
 
 - [ ] **Step 4: Walk it**
 
@@ -2217,8 +2217,8 @@ and add `useEffect` to the React import.
 
 - [ ] **Step 5: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 6: Walk every path**
 
@@ -2541,8 +2541,8 @@ const styles = StyleSheet.create({
 
 - [ ] **Step 5: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 6: Walk it**
 
@@ -2679,8 +2679,8 @@ const styles = StyleSheet.create({
 
 - [ ] **Step 2: Typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass.
+Run: `npx tsc --noEmit`, then `npx eslint <the files this task touched>`
+Expected: tsc passes; your own files lint clean. Do NOT run `npm run lint` and expect green — the repo has a pre-existing 47-problem baseline (see Global Constraints). Confirm the total has not grown.
 
 - [ ] **Step 3: Walk it**
 
@@ -2752,8 +2752,16 @@ Expected: `clean`.
 
 - [ ] **Step 5: Full typecheck and lint**
 
-Run: `npx tsc --noEmit && npm run lint`
-Expected: both pass with no warnings introduced by this feature.
+Run: `npx tsc --noEmit`
+Expected: passes.
+
+Then the regression check on the lint baseline:
+
+```bash
+npx eslint src 2>&1 | tail -3
+```
+
+Expected: **still 47 problems (36 errors, 11 warnings)** — the pre-existing baseline, unchanged. A higher number means this feature introduced lint problems; find and fix those in the feature's own files. Do not fix the baseline itself here.
 
 - [ ] **Step 6: Document the screens**
 

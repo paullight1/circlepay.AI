@@ -1,14 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { useStore } from '@/store/useStore';
-import { avatarColor, colors, fonts, radius, spacing } from '@/theme/tokens';
-import { Button, Card, ListRow, Screen, ScreenHeader } from '@/ui';
-import { IconBubble } from '@/ui/ListRow';
-
-const BANKS = ['GTBank', 'Access Bank', 'First Bank', 'Zenith Bank', 'Opay'];
+import { colors, fonts, radius, spacing } from '@/theme/tokens';
+import { BANKS, BankPicker, Button, Card, Screen, ScreenHeader } from '@/ui';
 
 /** 09 · Link Bank Account — simulated Open Banking OAuth. */
 export default function LinkBank() {
@@ -16,8 +13,8 @@ export default function LinkBank() {
   const linkAccount = useStore((s) => s.linkAccount);
   const linkedAccounts = useStore((s) => s.linkedAccounts);
 
-  const [linking, setLinking] = useState<string | null>(null);
-  const [linkedBank, setLinkedBank] = useState<string | null>(null);
+  const [linking, setLinking] = useState<string | undefined>(undefined);
+  const [linkedBank, setLinkedBank] = useState<string | undefined>(undefined);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => {
@@ -26,12 +23,12 @@ export default function LinkBank() {
 
   const startLink = (bank: string) => {
     if (linking) return;
-    setLinkedBank(null);
+    setLinkedBank(undefined);
     setLinking(bank);
     // Simulated OAuth handshake with the bank.
     timer.current = setTimeout(() => {
       linkAccount(bank);
-      setLinking(null);
+      setLinking(undefined);
       setLinkedBank(bank);
     }, 1400);
   };
@@ -41,73 +38,58 @@ export default function LinkBank() {
   return (
     <Screen>
       <ScreenHeader title="Link Bank Account" />
-      <Text style={styles.intro}>Securely link your bank account for automated deductions.</Text>
+
+      <View style={styles.hero}>
+        <View style={styles.heroCopy}>
+          <Text style={styles.heroTitle}>Secure. Fast. Reliable.</Text>
+          <Text style={styles.heroBody}>
+            Link your bank account to allow CirclePay AI to automate your savings and payments.
+          </Text>
+        </View>
+        <View style={styles.shield}>
+          <Ionicons name="shield-checkmark" size={30} color={colors.onPrimary} />
+        </View>
+      </View>
 
       {linkedBank && (
         <Card style={styles.successCard}>
           <View style={styles.successCheck}>
-            <Ionicons name="checkmark" size={22} color={colors.onPrimary} />
+            <Ionicons name="checkmark" size={20} color={colors.onPrimary} />
           </View>
           <View style={styles.successBody}>
             <Text style={styles.successTitle}>Account linked</Text>
             <Text style={styles.successText}>
-              {linkedBank} •••• {newest?.last4 ?? '••••'} will fund your circle contributions automatically.
+              {linkedBank} •••• {newest?.last4 ?? '••••'} is ready for automated deductions.
             </Text>
           </View>
         </Card>
       )}
 
-      <View style={styles.list}>
-        {BANKS.map((bank) => (
-          <Card key={bank} padded={false} style={styles.bankCard}>
-            <ListRow
-              title={bank}
-              subtitle={linking === bank ? 'Connecting securely…' : 'Instant link · auto-debit ready'}
-              left={
-                <View style={[styles.bubble, { backgroundColor: avatarColor(bank) }]}>
-                  <Text style={styles.bubbleText}>{bank[0]}</Text>
-                </View>
-              }
-              right={linking === bank ? <ActivityIndicator color={colors.primary} /> : undefined}
-              chevron={linking !== bank}
-              onPress={() => startLink(bank)}
-              style={styles.rowPad}
-            />
-          </Card>
-        ))}
-
-        <Card padded={false} style={[styles.bankCard, styles.otherCard]}>
-          <ListRow
-            title="Other Banks"
-            subtitle={linking === 'Other Bank' ? 'Connecting securely…' : 'Use Open Banking'}
-            left={<IconBubble name="business-outline" />}
-            right={linking === 'Other Bank' ? <ActivityIndicator color={colors.primary} /> : undefined}
-            chevron={linking !== 'Other Bank'}
-            onPress={() => startLink('Other Bank')}
-            style={styles.rowPad}
-          />
-        </Card>
-      </View>
+      <Text style={styles.legend}>Select Bank</Text>
+      <BankPicker banks={BANKS} selected={linkedBank} busy={linking} onSelect={startLink} />
 
       {linkedBank && <Button title="Done" onPress={() => router.back()} style={styles.doneBtn} />}
 
       <View style={styles.footer}>
-        <Ionicons name="lock-closed" size={14} color={colors.success} />
-        <Text style={styles.footerText}>
-          Powered by Open Banking APIs · Your data is encrypted and secure
-        </Text>
+        <Ionicons name="lock-closed" size={13} color={colors.success} />
+        <Text style={styles.footerText}>Your data is encrypted and secure</Text>
       </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  intro: {
-    fontFamily: fonts.medium,
-    fontSize: 13.5,
-    color: colors.sub,
-    lineHeight: 20,
-    marginBottom: spacing.lg,
+  hero: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg, marginBottom: spacing.xl },
+  heroCopy: { flex: 1 },
+  heroTitle: { fontFamily: fonts.extrabold, fontSize: 18, color: colors.ink },
+  heroBody: { fontFamily: fonts.medium, fontSize: 13, color: colors.sub, lineHeight: 19, marginTop: 6 },
+  shield: {
+    width: 64,
+    height: 64,
+    borderRadius: radius.lg,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   successCard: {
     flexDirection: 'row',
@@ -117,29 +99,18 @@ const styles = StyleSheet.create({
     borderColor: colors.successBg,
     marginBottom: spacing.lg,
   },
+  successBody: { flex: 1 },
   successCheck: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: colors.success,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  successBody: { flex: 1 },
   successTitle: { fontFamily: fonts.bold, fontSize: 14, color: colors.success },
   successText: { fontFamily: fonts.medium, fontSize: 12, color: colors.ink, marginTop: 2, lineHeight: 17 },
-  list: { gap: spacing.sm },
-  bankCard: { paddingHorizontal: spacing.lg },
-  otherCard: { borderStyle: 'dashed', borderWidth: 1.5, borderColor: colors.borderStrong },
-  rowPad: { paddingVertical: spacing.md },
-  bubble: {
-    width: 40,
-    height: 40,
-    borderRadius: radius.sm + 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bubbleText: { fontFamily: fonts.extrabold, fontSize: 16, color: colors.onPrimary },
+  legend: { fontFamily: fonts.bold, fontSize: 14, color: colors.ink, marginBottom: spacing.md },
   doneBtn: { marginTop: spacing.xl },
   footer: {
     flexDirection: 'row',

@@ -11,17 +11,23 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { electricityToken, examPins } from '@/lib/billers';
 import { daysFromNow, formatNaira, uid } from '@/lib/format';
+import { advance, fastForward, firstRunAt, MAX_CATCHUP } from '@/lib/savings';
 import {
   seedAgents, seedBills, seedCampaigns, seedCircles, seedLinkedAccounts,
-  seedNotifications, seedPlans, seedTransactions, seedTrustSignals,
-  seedUser, seedWallet,
+  seedNotifications, seedPlans, seedSavingsPlans, seedTransactions,
+  seedTrustSignals, seedUser, seedWallet,
 } from './seed';
 import type {
   AgentLocation, AppNotification, BillAgentRequest, BillCategoryId, BillMethod,
   BillPayment, Campaign, Circle, CircleMember, Donation, Frequency,
-  LinkedAccount, PartPayPlan, PayCategory, PayModel, Transaction,
-  TrustSignal, User, Wallet, WithdrawalRequest,
+  LinkedAccount, PartPayPlan, PayCategory, PayModel, SavingsPlan, SavingsRun,
+  Transaction, TrustSignal, User, Wallet, WithdrawalRequest,
 } from './types';
+
+/** Home grid default, in the order drawn in the designs. */
+const DEFAULT_QUICK_ACCESS = [
+  'savings', 'auto-savings', 'circles', 'support', 'bills', 'airtime', 'pos',
+];
 
 export interface CreateCircleInput {
   name: string;
@@ -72,6 +78,23 @@ export interface BillResult {
   error?: string;
 }
 
+export interface CreateSavingsPlanInput {
+  name: string;
+  type: SavingsPlan['type'];
+  amount: number;
+  frequency: Frequency;
+  accountId: string;
+  startDate: string;
+  endDate?: string;
+  circleId?: string;
+  partPayId?: string;
+}
+
+/** Fields a user may change on an existing plan. */
+export type SavingsPlanPatch = Partial<
+  Pick<SavingsPlan, 'name' | 'amount' | 'frequency' | 'accountId' | 'startDate' | 'endDate'>
+>;
+
 interface AppState {
   // ── Auth / onboarding ──
   onboarded: boolean;        // finished phone→OTP→KYC→PIN flow
@@ -97,7 +120,7 @@ interface AppState {
   // ── Circles ──
   circles: Circle[];
   createCircle: (input: CreateCircleInput) => Circle;
-  contributeToCircle: (circleId: string) => boolean;
+  contributeToCircle: (circleId: string, source?: 'manual' | 'auto') => boolean;
 
   // ── PartPay ──
   plans: PartPayPlan[];
@@ -129,6 +152,20 @@ interface AppState {
   requestKioskWithdrawal: (amount: number) => WithdrawalRequest | null;
   completeKioskWithdrawal: () => void;
   cancelKioskWithdrawal: () => void;
+
+  // ── Automated savings ──
+  savingsPlans: SavingsPlan[];
+  createSavingsPlan: (input: CreateSavingsPlanInput) => SavingsPlan;
+  updateSavingsPlan: (id: string, patch: SavingsPlanPatch) => void;
+  pauseSavingsPlan: (id: string) => void;
+  resumeSavingsPlan: (id: string) => void;
+  cancelSavingsPlan: (id: string) => void;
+  /** Executes every deduction that has come due. Returns how many ran. */
+  runDueSavings: () => number;
+
+  // ── Home Quick Access ──
+  quickAccess: string[];
+  setQuickAccess: (ids: string[]) => void;
 
   // ── Trust & notifications ──
   trustSignals: TrustSignal[];
@@ -281,7 +318,7 @@ export const useStore = create<AppState>()(
         return circle;
       },
 
-      contributeToCircle: (circleId) => {
+      contributeToCircle: (circleId, source = 'manual') => {
         const s = get();
         const circle = s.circles.find((c) => c.id === circleId);
         if (!circle) return false;
@@ -300,7 +337,14 @@ export const useStore = create<AppState>()(
               : c
           ),
           transactions: [
-            tx({ title: 'Manual Contribution', subtitle: circle.name, amount, direction: 'out', status: 'success', category: 'circle' }),
+            tx({
+              title: source === 'auto' ? 'Automated Contribution' : 'Manual Contribution',
+              subtitle: circle.name,
+              amount,
+              direction: 'out',
+              status: 'success',
+              category: 'circle',
+            }),
             ...s.transactions,
           ],
         });
@@ -587,6 +631,224 @@ export const useStore = create<AppState>()(
       },
       cancelKioskWithdrawal: () => set({ withdrawal: null }),
 
+      savingsPlans: seedSavingsPlans,
+
+      createSavingsPlan: (input) => {
+        const plan: SavingsPlan = {
+          id: uid('sp'),
+          name: input.name.trim(),
+          type: input.type,
+          amount: input.amount,
+          frequency: input.frequency,
+          accountId: input.accountId,
+          startDate: input.startDate,
+          endDate: input.endDate,
+          nextRunAt: firstRunAt(input.startDate, input.frequency),
+          status: 'active',
+          totalSaved: 0,
+          runs: [],
+          circleId: input.circleId,
+          partPayId: input.partPayId,
+          createdAt: new Date().toISOString(),
+        };
+        set((s) => ({ savingsPlans: [plan, ...s.savingsPlans] }));
+        get().pushNotification({
+          type: 'savings',
+          title: 'Automated Plan Created',
+          body: `${plan.name} is active. First deduction on ${new Date(plan.nextRunAt).toDateString()}.`,
+        });
+        return plan;
+      },
+
+      updateSavingsPlan: (id, patch) =>
+        set((s) => ({
+          savingsPlans: s.savingsPlans.map((p) => {
+            if (p.id !== id) return p;
+            const next = { ...p, ...patch };
+            // Any change to cadence or start moves the next deduction.
+            const rescheduled =
+              patch.frequency !== undefined || patch.startDate !== undefined
+                ? firstRunAt(next.startDate, next.frequency)
+                : p.nextRunAt;
+            return { ...next, nextRunAt: rescheduled };
+          }),
+        })),
+
+      pauseSavingsPlan: (id) =>
+        set((s) => ({
+          savingsPlans: s.savingsPlans.map((p) =>
+            p.id === id ? { ...p, status: 'paused' as const } : p
+          ),
+        })),
+
+      // Resuming must not fire the deductions missed while paused.
+      resumeSavingsPlan: (id) =>
+        set((s) => ({
+          savingsPlans: s.savingsPlans.map((p) =>
+            p.id === id
+              ? {
+                  ...p,
+                  status: 'active' as const,
+                  nextRunAt: fastForward(p.nextRunAt, p.frequency).next,
+                }
+              : p
+          ),
+        })),
+
+      cancelSavingsPlan: (id) =>
+        set((s) => ({ savingsPlans: s.savingsPlans.filter((p) => p.id !== id) })),
+
+      runDueSavings: () => {
+        const now = new Date();
+        let executed = 0;
+
+        /**
+         * Runs one deduction and advances the plan.
+         *
+         * Returns whether a deduction actually happened — NOT whether it
+         * succeeded. A failed debit still ran (it appended a transaction and
+         * advanced the schedule); a plan that simply had nothing left to pay
+         * did not, and must not be counted.
+         */
+        const runOnce = (planId: string): 'ran' | 'nothing-due' => {
+          const s = get();
+          const plan = s.savingsPlans.find((p) => p.id === planId);
+          if (!plan) return 'nothing-due';
+
+          let ok: boolean;
+          // Distinguishes "no money" from "the linked record refused it", so the
+          // failure we report to the user is the one that actually happened.
+          const insufficient = plan.amount > s.wallet.available;
+
+          if (plan.circleId) {
+            // Delegate so the circle really advances — and so we do not append a
+            // second transaction; contributeToCircle already appends one.
+            ok = s.contributeToCircle(plan.circleId, 'auto');
+          } else if (plan.partPayId) {
+            const target = s.plans.find((p) => p.id === plan.partPayId);
+            const due = target?.schedule.find((i) => i.status === 'upcoming');
+            if (!due) {
+              set((st) => ({
+                savingsPlans: st.savingsPlans.map((p) =>
+                  p.id === planId ? { ...p, status: 'completed' as const } : p
+                ),
+              }));
+              return 'nothing-due';
+            }
+            ok = s.payInstallment(plan.partPayId, due.id);
+          } else {
+            ok = plan.amount <= s.wallet.available;
+            if (ok) {
+              set((st) => ({
+                wallet: {
+                  ...st.wallet,
+                  available: st.wallet.available - plan.amount,
+                  savings: st.wallet.savings + plan.amount,
+                },
+                transactions: [
+                  tx({
+                    title: plan.name,
+                    subtitle: 'Automated Savings',
+                    amount: plan.amount,
+                    direction: 'out',
+                    status: 'success',
+                    category: 'savings',
+                  }),
+                  ...st.transactions,
+                ],
+              }));
+            }
+          }
+
+          if (!ok) {
+            // A failed auto-debit is user-visible, never a silent no-op.
+            set((st) => ({
+              transactions: [
+                tx({
+                  title: plan.name,
+                  subtitle: 'Automated Savings',
+                  amount: plan.amount,
+                  direction: 'out',
+                  status: 'failed',
+                  category: 'savings',
+                }),
+                ...st.transactions,
+              ],
+            }));
+            get().pushNotification({
+              type: 'alert',
+              title: 'Auto-debit failed',
+              body: insufficient
+                ? `${plan.name} could not be deducted — your wallet balance was too low.`
+                : `${plan.name} could not be deducted — the linked circle or plan did not accept it.`,
+            });
+          }
+
+          const run: SavingsRun = {
+            id: uid('sr'),
+            date: new Date().toISOString(),
+            amount: plan.amount,
+            status: ok ? 'success' : 'failed',
+            reason: ok ? undefined : insufficient ? 'Insufficient balance' : 'Could not be applied',
+          };
+
+          // Advance even on failure, or an empty wallet retries on every app open.
+          set((st) => ({
+            savingsPlans: st.savingsPlans.map((p) =>
+              p.id === planId
+                ? {
+                    ...p,
+                    nextRunAt: advance(p.nextRunAt, p.frequency),
+                    totalSaved: ok ? p.totalSaved + plan.amount : p.totalSaved,
+                    runs: [run, ...p.runs],
+                  }
+                : p
+            ),
+          }));
+          return 'ran';
+        };
+
+        for (const seen of get().savingsPlans) {
+          if (seen.status !== 'active') continue;
+
+          for (let i = 0; i < MAX_CATCHUP; i++) {
+            const plan = get().savingsPlans.find((p) => p.id === seen.id);
+            if (!plan || plan.status !== 'active') break;
+            if (new Date(plan.nextRunAt).getTime() > now.getTime()) break;
+            if (plan.endDate && new Date(plan.nextRunAt).getTime() > new Date(plan.endDate).getTime()) {
+              set((st) => ({
+                savingsPlans: st.savingsPlans.map((p) =>
+                  p.id === plan.id ? { ...p, status: 'completed' as const } : p
+                ),
+              }));
+              break;
+            }
+            if (runOnce(plan.id) === 'ran') executed++;
+          }
+
+          // Hit the cap and still behind → skip the rest, but say so.
+          const after = get().savingsPlans.find((p) => p.id === seen.id);
+          if (after && after.status === 'active' && new Date(after.nextRunAt).getTime() <= now.getTime()) {
+            const { next, skipped } = fastForward(after.nextRunAt, after.frequency, now);
+            set((st) => ({
+              savingsPlans: st.savingsPlans.map((p) => (p.id === after.id ? { ...p, nextRunAt: next } : p)),
+            }));
+            if (skipped > 0) {
+              get().pushNotification({
+                type: 'savings',
+                title: 'Deductions skipped',
+                body: `${skipped} ${after.name} deduction${skipped > 1 ? 's were' : ' was'} skipped while you were away.`,
+              });
+            }
+          }
+        }
+
+        return executed;
+      },
+
+      quickAccess: DEFAULT_QUICK_ACCESS,
+      setQuickAccess: (ids) => set({ quickAccess: ids }),
+
       trustSignals: seedTrustSignals,
       notifications: seedNotifications,
       markAllNotificationsRead: () =>
@@ -614,12 +876,14 @@ export const useStore = create<AppState>()(
           linkedAccounts: seedLinkedAccounts,
           redeemedSerials: [],
           withdrawal: null,
+          savingsPlans: seedSavingsPlans,
+          quickAccess: DEFAULT_QUICK_ACCESS,
           trustSignals: seedTrustSignals,
           notifications: seedNotifications,
         }),
     }),
     {
-      name: 'circlepay-store-v1',
+      name: 'circlepay-store-v2',
       storage: createJSONStorage(() => AsyncStorage),
     }
   )
