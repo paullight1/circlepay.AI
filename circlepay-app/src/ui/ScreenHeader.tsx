@@ -37,7 +37,10 @@ export function ScreenHeader({ title, subtitle, right, noBack, light }: Props) {
           </Text>
         )}
       </View>
-      {right ?? <View style={styles.back} />}
+      {/* Balances the back button so the title stays centred. Must NOT reuse
+          `back` — that carries a card background and border, which rendered as
+          a phantom empty button on every screen with no right action. */}
+      {right ?? <View style={styles.spacer} />}
     </View>
   );
 }
@@ -59,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
   },
+  spacer: { width: 38, height: 38 },
   backLight: {
     backgroundColor: 'rgba(255,255,255,0.14)',
     borderColor: 'rgba(255,255,255,0.2)',

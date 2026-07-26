@@ -123,9 +123,10 @@ export default function AutoSavingsHub() {
             <Card key={plan.id} padded={false} style={styles.planCard}>
               <ListRow
                 title={plan.name}
-                // Two lines, as drawn: amount + cadence, then what it does.
+                // As drawn: amount + cadence on line 1, then the descriptive
+                // copy, which itself wraps to two — hence a 3-line clamp.
                 subtitle={`${formatNaira(plan.amount, 2)} ${cadenceWord(plan.frequency)}\n${planSubtitle(plan)}`}
-                subtitleLines={2}
+                subtitleLines={3}
                 left={<IconBubble name={PLAN_ICONS[plan.type]} color={a.tint} bg={a.bg} />}
                 right={<StatusPill small label={statusLabel(plan.status)} />}
                 chevron
@@ -177,13 +178,17 @@ const styles = StyleSheet.create({
   hero: { backgroundColor: colors.chip, borderColor: colors.chip },
   heroTitle: { fontFamily: fonts.extrabold, fontSize: 21, color: colors.ink, lineHeight: 28 },
   heroBody: { fontFamily: fonts.medium, fontSize: 13, color: colors.sub, lineHeight: 19, marginTop: spacing.sm },
-  filters: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.lg, flexWrap: 'wrap' },
-  filterChip: { flexGrow: 1, justifyContent: 'center' },
+  // One row of three, as drawn. `flexShrink` lets the widest label give way
+  // on narrow screens instead of wrapping the third chip onto its own line.
+  filters: { flexDirection: 'row', gap: 6, marginTop: spacing.lg },
+  filterChip: { flex: 1, flexShrink: 1, paddingHorizontal: spacing.sm, justifyContent: 'center' },
   planCard: { paddingHorizontal: spacing.lg, marginBottom: spacing.md },
   planRow: { paddingVertical: spacing.md },
-  createRow: { flexDirection: 'row', gap: spacing.sm },
-  createCard: { flex: 1, gap: 7, padding: spacing.md, borderRadius: radius.lg },
-  createTitle: { fontFamily: fonts.bold, fontSize: 12.5 },
+  createRow: { flexDirection: 'row', gap: 6 },
+  // Tight padding + 12px title so "Contribution" fits the column at 360px
+  // instead of hard-breaking mid-word.
+  createCard: { flex: 1, gap: 7, paddingVertical: spacing.md, paddingHorizontal: spacing.sm, borderRadius: radius.lg },
+  createTitle: { fontFamily: fonts.bold, fontSize: 12 },
   createBlurb: { fontFamily: fonts.medium, fontSize: 11, color: colors.sub, lineHeight: 15 },
   benefits: { marginTop: spacing.xl, backgroundColor: colors.cardAlt },
   benefitsTitle: { fontFamily: fonts.bold, fontSize: 13.5, color: colors.ink, marginBottom: spacing.lg },

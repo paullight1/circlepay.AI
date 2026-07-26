@@ -2,7 +2,7 @@
 
 Extracted from `CirclePay AI Screens.dc.html` (design canvas v1.0).
 Tagline: **"Save Together. Pay Smart. Grow Better."**
-24 mobile screens across 7 flows. Currency is Nigerian Naira (₦). Phone frame in mockups: 340px wide, min-height 724px, radius 38px — treat as a standard mobile viewport in RN.
+32 mobile screens across 8 flows. Currency is Nigerian Naira (₦). Phone frame in mockups: 340px wide, min-height 724px, radius 38px — treat as a standard mobile viewport in RN.
 
 ---
 
@@ -121,12 +121,14 @@ Tagline: **"Save Together. Pay Smart. Grow Better."**
 | Position | Icon | Label | Active color |
 |---|---|---|---|
 | 1 | home | **Home** | `#4B27D4` (inactive `#A6A7B5`) |
-| 2 | users | **Circles** | " |
-| 3 (center) | qr | **Scan** — 58px circular FAB, gradient `150deg #5B2EE6→#7C4DFF`, raised −26px, white qr icon + 8.5px "Scan" label | — |
-| 4 | heart | **Support** | " |
-| 5 | menu (hamburger) | **More** | " |
+| 2 | wallet | **Savings** | " |
+| 3 (center) | qr | **Scan & Pay** — 58px circular FAB, gradient `150deg #5B2EE6→#7C4DFF`, raised −26px, white qr icon + 8.5px label | — |
+| 4 | users | **Circles** | " |
+| 5 | grid | **More** | " |
 
-Tab bar appears on: 05 Home (Home active), 06 Wallet (More active), 07 My Circles (Circles active), 18 Campaigns (Support active). All other screens are pushed detail screens with a back chevron header (back icon + 17px/700 title).
+Tab bar appears on: 05 Home (Home active), 25 Savings (Savings active), 07 My Circles (Circles active), 06 Wallet (More active). All other screens are pushed detail screens with a back chevron header (back icon + 17px/700 title).
+
+**CircleSupport is no longer a tab.** Screen 18 is reached at `/campaigns`, from the Home Quick Access "Support Groups" tile and More → Community. The Savings tab took its slot when Automated Savings landed.
 
 ### Flow map
 
@@ -192,6 +194,10 @@ Canvas status legend: green dot "Paid / Success", amber "Pending", pink "Late / 
   - "Total Balance" + eye icon (both `#D9CCFF`) · **₦125,680.50** (32px/800).
   - Two columns: "Available" **₦98,450.20** · "On Hold (Groups)" **₦27,230.30**.
   - 3 quick actions in `rgba(255,255,255,0.16)` radius-13 chips: **Add Money** (plus), **Withdraw** (arrowUp), **Transfer** (transfer).
+- **Quick Access** section header (16px/800) + **"Edit"** link → screen 32.
+  - 4x2 grid of white radius-18 tiles: seven user-chosen shortcuts plus a fixed **More** tile. Default order: Savings · Automated Savings · Circles · Support Groups · Pay Bills · Airtime · POS · More.
+  - Tile width 23.5% with `justifyContent: 'space-between'` — a fixed column gap overflows on narrow devices and drops the row to three across.
+- **"Build Your Future Automatically"** promo (gradient `#231060→#4B27D4`, radius 18): title + "Let CirclePay AI help you save, pay and grow your money without stress." + white **"Set Up Now"** button → screen 26. Right: 52px translucent circle, sync icon.
 - Section header: **"My Circles"** (16px/800) + "See all" (purple link).
 - **Circle rows** (white, radius 18): 42px radius-13 initials tile · name + "Next payout {date}" · right column amount (purple/800) + paid ratio (green/700):
   1. `FE` **Family Esusu** (tile `#4B27D4`) — Next payout May 24 — **₦100,000** — "7/10 paid"
@@ -232,11 +238,14 @@ Canvas status legend: green dot "Paid / Success", amber "Pending", pink "Late / 
 - Bottom CTA: **"Create Circle & Invite"**.
 
 ### 09 · Link Bank Account
-- Header: back + **"Link Bank Account"**. Sub: "Securely link an account to auto-fund your contributions. No manual chasing."
-- **Bank rows** (white, radius 16; 40px radius-11 logo tile with initials):
-  - `GT` **GTBank** (`#FF6A2C`) · `AB` **Access Bank** (`#F58220`) · `FB` **First Bank** (`#0A2A66`) · `Z` **Zenith Bank** (`#D8112B`) · `O` **Opay** (`#1A8F5C`) — each with `#C9CAD6` chevron.
-  - Dashed-border row: bank icon on `#EDE7FD` — **"Other banks"** / "Use Open Banking" — purple chevron.
-- Footer (bottom-anchored, centered, 11.5px/600 `#6B6C7E`): green lock icon + "Powered by Open Banking · encrypted end-to-end".
+- Header: back + **"Link Bank Account"**.
+- **Hero row**: "Secure. Fast. Reliable." (18px/800) + "Link your bank account to allow CirclePay AI to automate your savings and payments.", beside a 64px purple rounded-square shield-check badge.
+- **"Select Bank"** — a three-column grid (`BankPicker`), each tile a 40px brand mark + name, selected state = purple border on `#E7E0FB` with a check badge, and a spinner on the tile being linked:
+  - **GTBank** · **Access Bank** · **First Bank** · **Zenith Bank** · **UBA** · **Fidelity Bank** · **Sterling Bank** · **Other Banks**.
+  - Linking is a simulated 1.4s Open Banking handshake, after which a green "Account linked" card appears above the grid and a **Done** button below it.
+  - *Deviation from earlier revisions:* the old list layout offered Opay; the grid follows the current mockup, so a new Opay account can only be linked via "Other Banks". The seeded Opay account (`la-2`) is unaffected.
+- Footer (centered, 11.5px/600 `#6B6C7E`): green lock icon + "Your data is encrypted and secure".
+- Reached from More → Linked Bank Accounts, and from step 2 of screen 27.
 
 ### 10 · Group Dashboard
 - Header: back + **"Family Esusu"** + dots (kebab) right.
@@ -323,7 +332,7 @@ Canvas status legend: green dot "Paid / Success", amber "Pending", pink "Late / 
   - clock grey — Jul 24 · Month 3 (text `#8A8B98`) — ₦50,000 — **Upcoming** (`#A6A7B5`)
 - Bottom CTA: **"Make Early Payment"**.
 
-### 18 · Campaigns  *(tab: Support)*
+### 18 · Campaigns  *(pushed at `/campaigns` — no longer a tab)*
 - Header: **"Support & Donations"** (19px/800) + bell icon.
 - **CTA banner** (gradient 140deg `#5B2EE6→#7C4DFF`, radius 20): **"Create a Support Campaign"** / "Raise funds for what matters" (`#D9CCFF`) + white button "Create Campaign"; right 54px translucent circle with heart icon.
 - **Category chips** horizontal row (46px radius-14 chips + 10.5px labels): **Burial** (heart, purple), **Birthday** (gift, amber), **Medical** (health, pink), **Wedding** (star, blue), **More** (dots, grey).
@@ -386,6 +395,54 @@ Canvas status legend: green dot "Paid / Success", amber "Pending", pink "Late / 
 - **Fee breakdown card** (white, radius 18): Amount **₦20,000.00** · Transaction fee **₦100.00** · divider · **Total deduction ₦20,100.00** (purple, 800).
 - Warning banner (`#FCE6EC`, radius 14): alert icon `#C62A55` + "Never share this code with anyone except the agent completing your withdrawal." (`#8A3450`).
 - Bottom action (secondary/outlined only): **"Cancel Request"**.
+
+---
+
+### 25 · Savings  *(tab: Savings)*
+- Tab root, no back button. Heading **"Savings"** (24px/800).
+- **Total Saved card** (white, radius 18): "Total Saved" label + `wallet.savings + wallet.onHold` (30px, JetBrains Mono), split row "In circles" / "In savings".
+- Below the card, a lifetime line: **"Automated to date · ₦X"**. Deliberately outside the card — circle-linked plan contributions already sit inside "In circles", so adding it to the total would double-count.
+- Rows: **Automated Savings** (`n active plans`) → 26 · **Circle Savings** (`n circles`) → 07 · **Savings History** → 31.
+- Empty state when no plans exist: `EmptyState` + a **"Create a plan"** button (EmptyState carries no action prop).
+
+### 26 · Automated Savings
+- Header: back + **"Automated Savings"**, right slot **"History"** (clock icon + 12.5px/700 purple).
+- **Hero card** (`#E7E0FB` bg, radius 18): "Save Automatically.\nAchieve Your Goals." (21px/800) + "Set it once, and let CirclePay handle the rest. Stay consistent and stress-free."
+- **Filter chips**, one row of three: Daily Savings · Weekly Contributions · Instalment Payments. `flex: 1` + 6px gap so the row never wraps to a second line.
+- **Active Plans** + "View all" (clears the filter, showing paused and completed too). Row: type icon bubble · name · 3-line subtitle (`₦X daily` then the descriptive copy, which wraps to two) · Active/Paused/Done pill · chevron.
+- **Create New Plan**: three cards — Daily Savings (`#E4F5EF`), Weekly Contribution (`#E7E0FB`), Instalment Payment (`#FBF1DC`). 12px/700 title so "Contribution" doesn't hard-break at 360px.
+- **Automated Savings Benefits**: 4 icons — Builds financial discipline · Helps you achieve goals faster · No need to remember · Secure & trustworthy.
+
+### 27 · Create Automated Savings Plan
+- Header: back + **"Create Automated Savings Plan"**. `StepDots` 1–4 (26px circles, filled `#4B27D4`, completed show a check, 34×2px rails).
+- **Step 1** — "Select Plan Type": three radio cards (selected = purple border + `#E7E0FB` fill + filled radio). Then "Plan Details": Plan Name · Amount to Deduct (₦ prefix) · Deduction Frequency · Start Date · End Date (Optional, `YYYY-MM-DD`). An optional "Fund an existing commitment" picker appears when a Circle matches the cadence, or for instalments any active PartPay plan; choosing one **pins** amount and frequency to that record and locks the amount field.
+- **Step 2** — Debit From: existing linked accounts, then the bank grid to link a new one (1.4s simulated handshake). Footer: lock icon + "Your data is encrypted and secure".
+- **Step 3** — Deduction Schedule: Next Deduction (date + 08:00 AM), From `<bank> · <first4> **** **** <last4>` → To wallet / circle / PartPay plan, then the next six occurrences.
+- **Step 4** — Plan Summary rows, then **"Create Plan"**.
+- Errors surface on the offending `Field` via its `error` prop, never `Alert.alert` (a silent no-op on web).
+
+### 28 · Plan Created Successfully  *(step 4 result)*
+- Full-bleed `#231060`. Green check circle (68px), **"Plan Created Successfully!"** (21px/800 white), body "Your <type> Plan has been set up and is now active."
+- White plan card: icon + name + `₦X · Every Day`, then "Starts on: <date>" and "Next deduction: 08:00 AM".
+- Primary **"Done"** → replaces to 26.
+
+### 29 · Plan Summary
+- Header: back + **"Plan Summary"**. Plan header card (icon · name · `₦X · Every Day` · status pill).
+- Rows: Status · Frequency · Amount · Start Date · End Date · Linked Account · Saved so far.
+- Next Deduction card + **"View Full Schedule"** → 30.
+- Two outlined actions: **Pause Plan** / **Resume Plan** and **Edit Plan**. Destructive **"Cancel plan"** text action, guarded by `confirm` from `@/lib/dialogs`.
+
+### 30 · Full Schedule
+- Header: back + **"Full Schedule"**, subtitle = plan name.
+- **Upcoming**: next 12 occurrences (date + 08:00 AM + amount), stopping at the plan's end date.
+- **Past deductions**: each run with amount and a Success/Failed `StatusPill`, failures also showing their reason. Status is never carried by colour alone.
+
+### 31 · Savings History
+- Header: back + **"Savings History"**. Every run across all plans, newest first: plan name · timestamp · amount · Success/Failed pill. `EmptyState` before anything has run.
+
+### 32 · Edit Quick Access
+- Header: back + **"Edit Quick Access"**. Intro + "n of 7 selected" counter.
+- All 11 shortcuts as toggle rows (check-circle when on, dimmed with "Remove one to add this" when the cap is reached). Chosen order = selection order. **Save** persists to the store.
 
 ---
 

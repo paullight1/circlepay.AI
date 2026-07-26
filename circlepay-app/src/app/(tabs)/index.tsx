@@ -370,11 +370,14 @@ const styles = StyleSheet.create({
   quickGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
+    // `space-between` rather than a fixed column gap: 4 x 23.5% leaves exactly
+    // 6% to spread across three gaps, so the row stays four-wide at any screen
+    // width. A fixed 8px gap overflows on narrow devices and wraps to three.
+    justifyContent: 'space-between',
+    rowGap: spacing.sm,
     marginTop: spacing.xs,
   },
   quickTile: {
-    // Four per row, accounting for three 8px gaps.
     width: '23.5%',
     alignItems: 'center',
     gap: 7,
