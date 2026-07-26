@@ -102,7 +102,7 @@ export default function DonationReceipt() {
       />
       <Button
         title="Done"
-        onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)/support'))}
+        onPress={() => (router.canGoBack() ? router.back() : router.replace('/campaigns'))}
         style={styles.doneBtn}
       />
     </Screen>

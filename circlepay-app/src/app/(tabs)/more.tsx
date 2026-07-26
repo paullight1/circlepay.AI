@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused, useRouter } from 'expo-router';
 import { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -40,6 +39,9 @@ export default function More() {
       <Card padded={false} style={styles.group}>
         <ListRow title="Wallet" subtitle="Balances, add money, withdraw & transfer" chevron
           left={<IconBubble name="wallet-outline" />} onPress={() => router.push('/wallet')} />
+        <ListRow title="Automated Savings" subtitle="Auto-debit plans for savings & contributions" chevron
+          left={<IconBubble name="sync-circle-outline" color={colors.success} bg={colors.successBg} />}
+          onPress={() => router.push('/auto-savings')} />
         <ListRow title="Bills & Airtime" subtitle="Data, power, TV, betting, hotels & travel" chevron
           left={<IconBubble name="receipt-outline" color={colors.info} bg={colors.infoBg} />}
           onPress={() => router.push('/bills')} />
@@ -49,6 +51,13 @@ export default function More() {
         <ListRow title="Agent Banking" subtitle="Deposit, withdraw & scratch cards" chevron
           left={<IconBubble name="storefront-outline" color={colors.success} bg={colors.successBg} />}
           onPress={() => router.push('/agent')} />
+      </Card>
+
+      <SectionHeader title="Community" />
+      <Card padded={false} style={styles.group}>
+        <ListRow title="CircleSupport" subtitle="Fundraise for life events with your community" chevron
+          left={<IconBubble name="heart-outline" color={colors.danger} bg={colors.dangerBg} />}
+          onPress={() => router.push('/campaigns')} />
       </Card>
 
       <SectionHeader title="AI & Security" />

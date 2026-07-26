@@ -23,6 +23,8 @@
 - **Money formatting** goes through `AmountText` or `formatNaira` from `@/lib/format`; dates through `formatDate` / `formatDateTime`.
 - **Every money movement appends a `Transaction`** — that invariant holds for automated runs too.
 - Use existing `@/ui` components before building anything bespoke. Screen-local presentational components are fine (see `QuickTile` in `src/app/(tabs)/index.tsx` for the pattern).
+- **Write `T[]`, never `Array<T>`** — the repo enables `@typescript-eslint/array-type`, so the `Array<…>` form fails your own file's lint gate.
+- **Prefer a statically-typed lookup over `as keyof typeof Ionicons.glyphMap`.** Building an icon name with a template literal and casting defeats the check that catches typos; a `Record<K, keyof typeof Ionicons.glyphMap>` makes a bad name a compile error instead of an invisible glyph at runtime.
 - Only route files belong under `src/app/**` — every file there becomes a route. Shared components go in `src/ui`, helpers in `src/lib`.
 - No `any` unless genuinely unavoidable.
 - Deductions run at **08:00 local**. Plan names, hero copy and benefit labels come verbatim from the spec.
@@ -1554,13 +1556,14 @@ import { colors, fonts, radius, spacing } from '@/theme/tokens';
 import { Card, Chip, EmptyState, ListRow, Screen, ScreenHeader, SectionHeader, StatusPill } from '@/ui';
 import { IconBubble } from '@/ui/ListRow';
 
-const FILTERS: Array<{ type: SavingsPlanType; label: string }> = [
+// `T[]`, not `Array<T>` — this repo enables @typescript-eslint/array-type.
+const FILTERS: { type: SavingsPlanType; label: string }[] = [
   { type: 'daily', label: 'Daily Savings' },
   { type: 'weekly', label: 'Weekly Contributions' },
   { type: 'instalment', label: 'Instalment Payments' },
 ];
 
-const BENEFITS: Array<{ icon: keyof typeof Ionicons.glyphMap; label: string }> = [
+const BENEFITS: { icon: keyof typeof Ionicons.glyphMap; label: string }[] = [
   { icon: 'barbell-outline', label: 'Builds financial discipline' },
   { icon: 'flag-outline', label: 'Helps you achieve goals faster' },
   { icon: 'notifications-off-outline', label: 'No need to remember' },

@@ -1,21 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useIsFocused, useRouter } from 'expo-router';
-import { useRef } from 'react';
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { useCoachMark } from '@/lib/coachTour';
 import { daysUntil, formatNaira } from '@/lib/format';
 import { useStore } from '@/store/useStore';
 import { colors, fonts, gradients, radius, spacing } from '@/theme/tokens';
-import { AmountText, Avatar, Button, Card, CoachMark, ProgressBar, Screen, SectionHeader } from '@/ui';
+import {
+  AmountText, Avatar, Button, Card, ProgressBar, Screen, ScreenHeader, SectionHeader,
+} from '@/ui';
 
-const CATEGORIES: Array<{
+const CATEGORIES: {
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
   color: string;
   bg: string;
-}> = [
+}[] = [
   { label: 'Burial', icon: 'heart', color: colors.primary, bg: colors.chip },
   { label: 'Birthday', icon: 'gift', color: colors.warning, bg: colors.warningBg },
   { label: 'Medical', icon: 'medkit', color: colors.danger, bg: colors.dangerBg },
@@ -24,15 +24,10 @@ const CATEGORIES: Array<{
   { label: 'More', icon: 'ellipsis-horizontal', color: colors.sub, bg: colors.cardAlt },
 ];
 
-/** Screen 18 — Support / Donations home (CircleSupport). */
+/** Screen 18 — Support / Donations home (CircleSupport), pushed from Home/More. */
 export default function Support() {
   const router = useRouter();
   const campaigns = useStore((s) => s.campaigns);
-
-  // Tour stop 3 — the "Create Campaign" button in the banner.
-  const ctaRef = useRef<View | null>(null);
-  const focused = useIsFocused();
-  const ctaMark = useCoachMark('support', focused);
 
   const active = campaigns.filter((c) => c.status === 'active');
   const totalRaised = campaigns.reduce((sum, c) => sum + c.raised, 0);
@@ -40,13 +35,10 @@ export default function Support() {
 
   return (
     <Screen>
-      {/* Heading */}
-      <View style={styles.headerRow}>
-        <Text style={styles.heading}>Support / Donations</Text>
-        <View style={styles.bell}>
-          <Ionicons name="notifications-outline" size={19} color={colors.ink} />
-        </View>
-      </View>
+      {/* This screen used to be a tab root with its own heading row and a
+          decorative bell. Now that it is pushed, ScreenHeader carries the
+          title — a second heading just repeated it. */}
+      <ScreenHeader title="CircleSupport" subtitle="Support / Donations" />
 
       {/* Create campaign CTA banner */}
       <LinearGradient
@@ -57,17 +49,12 @@ export default function Support() {
         <View style={styles.bannerBody}>
           <Text style={styles.bannerTitle}>Create a Support Campaign</Text>
           <Text style={styles.bannerSub}>Raise funds for what matters</Text>
-          {/* Wrapper exists only to give the coach mark a measurable node —
-              `Button` is a Pressable that does not forward a ref. It hugs the
-              button exactly, so the banner looks unchanged. */}
-          <View ref={ctaRef} collapsable={false} style={styles.ctaWrap}>
-            <Button
-              title="Create Campaign"
-              small
-              onPress={() => router.push('/campaigns/create')}
-              style={styles.bannerBtn}
-            />
-          </View>
+          <Button
+            title="Create Campaign"
+            small
+            onPress={() => router.push('/campaigns/create')}
+            style={styles.bannerBtn}
+          />
         </View>
         <View style={styles.bannerBubble}>
           <Ionicons name="heart" size={26} color={colors.onPrimary} />
@@ -136,32 +123,11 @@ export default function Support() {
           </View>
         </View>
       </LinearGradient>
-
-      <CoachMark
-        visible={ctaMark.visible}
-        targetRef={ctaRef}
-        title={ctaMark.title}
-        body={ctaMark.body}
-        onDismiss={ctaMark.onDismiss}
-        onSkipAll={ctaMark.onSkipAll}
-      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: spacing.lg,
-  },
-  heading: { fontFamily: fonts.extrabold, fontSize: 20, color: colors.ink, letterSpacing: -0.4 },
-  bell: {
-    width: 38, height: 38, borderRadius: 19,
-    backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border,
-    alignItems: 'center', justifyContent: 'center',
-  },
   banner: {
     borderRadius: radius.xl,
     padding: spacing.xl,
@@ -172,7 +138,6 @@ const styles = StyleSheet.create({
   bannerBody: { flex: 1 },
   bannerTitle: { fontFamily: fonts.extrabold, fontSize: 16.5, color: colors.onPrimary },
   bannerSub: { fontFamily: fonts.medium, fontSize: 12.5, color: colors.onPrimaryDim, marginTop: 3 },
-  ctaWrap: { alignSelf: 'flex-start' },
   bannerBtn: { alignSelf: 'flex-start', marginTop: spacing.md, backgroundColor: colors.card },
   bannerBubble: {
     width: 54, height: 54, borderRadius: 27,

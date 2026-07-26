@@ -11,8 +11,8 @@ import { CoachMark } from '@/ui';
 
 const TAB_ICONS: Record<string, { icon: keyof typeof Ionicons.glyphMap; label: string }> = {
   index: { icon: 'home', label: 'Home' },
+  savings: { icon: 'wallet', label: 'Savings' },
   circles: { icon: 'people', label: 'Circles' },
-  support: { icon: 'heart', label: 'Support' },
   more: { icon: 'grid', label: 'More' },
 };
 
@@ -90,8 +90,8 @@ export default function TabLayout() {
       tabBar={(props: BottomTabBarProps) => <CirclePayTabBar {...props} />}
       screenOptions={{ headerShown: false, sceneStyle: { backgroundColor: colors.bg } }}>
       <Tabs.Screen name="index" />
+      <Tabs.Screen name="savings" />
       <Tabs.Screen name="circles" />
-      <Tabs.Screen name="support" />
       <Tabs.Screen name="more" />
     </Tabs>
   );

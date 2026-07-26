@@ -14,7 +14,7 @@ import { useCallback } from 'react';
 import { useStore } from '@/store/useStore';
 
 /** Every stop on the tour, in the order a new user meets them. */
-export const COACH_MARK_KEYS = ['home', 'circles', 'support', 'more'] as const;
+export const COACH_MARK_KEYS = ['home', 'circles', 'savings', 'more'] as const;
 
 export type CoachMarkKey = (typeof COACH_MARK_KEYS)[number];
 
@@ -26,7 +26,7 @@ interface CoachMarkCopy {
 export const COACH_MARK_COPY: Record<CoachMarkKey, CoachMarkCopy> = {
   home: { title: 'Scan & Pay', body: 'Pay anyone by scanning their code' },
   circles: { title: 'Next payout', body: 'Your next payout lands here' },
-  support: { title: 'Start a campaign', body: 'Raise funds for what matters' },
+  savings: { title: 'Automated Savings', body: 'Let CirclePay save for you on schedule' },
   more: { title: 'Trust score', body: 'See how your trust score protects you' },
 };
 

@@ -12,16 +12,22 @@ interface Props {
   onPress?: () => void;
   chevron?: boolean;
   style?: ViewStyle;
+  /** Subtitle line clamp. Defaults to 1; savings plan rows need 2. */
+  subtitleLines?: number;
 }
 
 /** Generic list row: icon/avatar · title+subtitle · right accessory. */
-export function ListRow({ title, subtitle, left, right, onPress, chevron, style }: Props) {
+export function ListRow({
+  title, subtitle, left, right, onPress, chevron, style, subtitleLines = 1,
+}: Props) {
   const content = (
     <>
       {left}
       <View style={styles.body}>
         <Text style={styles.title} numberOfLines={1}>{title}</Text>
-        {!!subtitle && <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>}
+        {!!subtitle && (
+          <Text style={styles.subtitle} numberOfLines={subtitleLines}>{subtitle}</Text>
+        )}
       </View>
       <View style={styles.right}>
         {right}

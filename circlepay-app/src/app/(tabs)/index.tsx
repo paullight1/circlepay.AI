@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { formatDate, timeAgo } from '@/lib/format';
+import { shortcutById } from '@/lib/shortcuts';
 import type { Circle, Transaction } from '@/store/types';
 import { useStore } from '@/store/useStore';
 import {
@@ -125,6 +126,7 @@ export default function Home() {
   const wallet = useStore((s) => s.wallet);
   const circles = useStore((s) => s.circles);
   const transactions = useStore((s) => s.transactions);
+  const quickAccess = useStore((s) => s.quickAccess);
   const hasUnread = useStore((s) => s.notifications.some((n) => !n.read));
   const [hidden, setHidden] = useState(false);
 
@@ -209,34 +211,32 @@ export default function Home() {
       </LinearGradient>
 
       {/* Quick access */}
-      <View style={styles.quickRow}>
+      <SectionHeader
+        title="Quick Access"
+        actionLabel="Edit"
+        onAction={() => router.push('/quick-access')}
+      />
+      <View style={styles.quickGrid}>
+        {quickAccess.map((id) => {
+          const s = shortcutById(id);
+          if (!s) return null;
+          return (
+            <QuickTile
+              key={s.id}
+              icon={s.icon}
+              tint={s.tint}
+              bg={s.bg}
+              label={s.label}
+              onPress={() => router.push(s.href)}
+            />
+          );
+        })}
         <QuickTile
-          icon="receipt"
-          tint={colors.success}
-          bg={colors.successBg}
-          label="Bills"
-          onPress={() => router.push('/bills')}
-        />
-        <QuickTile
-          icon="people"
-          tint={colors.primary}
-          bg={colors.chip}
-          label="Circles"
-          onPress={() => router.push('/(tabs)/circles')}
-        />
-        <QuickTile
-          icon="calendar"
-          tint={colors.info}
-          bg={colors.infoBg}
-          label="Pay Gradually"
-          onPress={() => router.push('/partpay')}
-        />
-        <QuickTile
-          icon="heart"
-          tint={colors.danger}
-          bg={colors.dangerBg}
-          label="Support"
-          onPress={() => router.push('/(tabs)/support')}
+          icon="ellipsis-horizontal"
+          tint={colors.sub}
+          bg={colors.cardAlt}
+          label="More"
+          onPress={() => router.push('/(tabs)/more')}
         />
       </View>
 
@@ -257,15 +257,18 @@ export default function Home() {
         end={{ x: 1, y: 1 }}
         style={styles.promoCard}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.promoTitle}>Pay for what matters gradually with CirclePay</Text>
+          <Text style={styles.promoTitle}>Build Your Future Automatically</Text>
+          <Text style={styles.promoBody}>
+            Let CirclePay AI help you save, pay and grow your money without stress.
+          </Text>
           <Pressable
-            onPress={() => router.push('/partpay')}
+            onPress={() => router.push('/auto-savings')}
             style={({ pressed }) => [styles.promoBtn, pressed && { opacity: 0.8 }]}>
-            <Text style={styles.promoBtnLabel}>Get Started</Text>
+            <Text style={styles.promoBtnLabel}>Set Up Now</Text>
           </Pressable>
         </View>
         <View style={styles.promoIcon}>
-          <Ionicons name="calendar" size={24} color={colors.onPrimary} />
+          <Ionicons name="sync-circle" size={24} color={colors.onPrimary} />
         </View>
       </LinearGradient>
 
@@ -364,13 +367,15 @@ const styles = StyleSheet.create({
   },
   balanceActionLabel: { fontFamily: fonts.bold, fontSize: 12, color: colors.onPrimary },
 
-  quickRow: {
+  quickGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.sm,
-    marginTop: spacing.xl,
+    marginTop: spacing.xs,
   },
   quickTile: {
-    flex: 1,
+    // Four per row, accounting for three 8px gaps.
+    width: '23.5%',
     alignItems: 'center',
     gap: 7,
     backgroundColor: colors.card,
@@ -420,6 +425,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.onPrimary,
     lineHeight: 21,
+  },
+  promoBody: {
+    fontFamily: fonts.medium, fontSize: 12.5, color: colors.onPrimaryDim,
+    lineHeight: 18, marginTop: 4,
   },
   promoBtn: {
     alignSelf: 'flex-start',

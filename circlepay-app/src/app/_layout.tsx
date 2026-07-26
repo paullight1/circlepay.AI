@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { useAutoSavings } from '@/hooks/use-auto-savings';
 import { colors } from '@/theme/tokens';
 
 SplashScreen.preventAutoHideAsync();
@@ -31,6 +32,9 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) SplashScreen.hideAsync();
   }, [loaded]);
+
+  // Must run before the `!loaded` early return — hooks are unconditional.
+  useAutoSavings();
 
   if (!loaded) return null;
 
